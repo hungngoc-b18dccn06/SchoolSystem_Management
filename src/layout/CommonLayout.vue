@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import logo from '@/assets/logo.svg'
+import logo from '@/assets/logo.png'
 import {ref, onMounted} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import AppTopBar from "@/layout/AppTopbar.vue";
