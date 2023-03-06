@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LayoutView from '@/views/LayoutView.vue';
+import UserList from '@/components/user/List.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -14,11 +15,11 @@ const router = createRouter({
           name: "home",
           component: HomeView,
         },
-        // {
-        //   path: '/users',
-        //   name: 'users',
-        //   component: UserList
-        // },
+        {
+          path: '/users',
+          name: 'users',
+          component: UserList
+        },
         // {
         //   path: '/user/:id/update',
         //   name: 'userUpdate',
