@@ -8,7 +8,7 @@ import axios, {AxiosError} from "axios";
 const RESPONSE_TIMEOUT = 30000;
 
 const api = axios.create({
-  baseURL: 'http://dev.base.api.skylab.vn',
+  baseURL: 'http://127.0.0.1:8000',
   headers: {
     "Content-Type": "application/json",
   },
