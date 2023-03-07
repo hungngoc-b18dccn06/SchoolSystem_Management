@@ -24,5 +24,6 @@ const Lang = {
   menu_notion: "Notions",
   menu_privacy: "Privacy policy",
   menu_ai_tech: "AI Tech",
+  editProfile:"Edit Profile"
 };
 export default Lang;

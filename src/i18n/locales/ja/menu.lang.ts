@@ -24,5 +24,6 @@ const Lang = {
   menu_notion: "特定商取引法に基づく表記",
   menu_privacy: "プライバシーポリシー",
   menu_ai_tech: "ご利用いただく前に",
+  editProfile : "プロファイル編集",
 };
 export default Lang;
