@@ -1,11 +1,11 @@
 <template>
   <div class="bg-white absolute w-screen z-2 sidebar p-2 pl-6">
-    <img src="@/assets/logo.svg" />
+    <img src="@/assets/logo.png" />
   </div>
 </template>
 <style lang="scss" scoped>
 img {
-  width: 70px !important;
+  width: 120px !important;
 }
 .sidebar {
   box-shadow: 0 2px 30px -1px rgb(85 85 85 / 8%),
