@@ -48,9 +48,15 @@
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import Popup from "@/components/PopupConfirm.vue";
+import api from "@/api";
+import { ApiConstant, AppConstant } from "@/const";
+import PAGE_ROUTE from "@/const/pageRoute";
+import router from "@/router";
+import { useUserStore } from "@/stores/user";
 const emit = defineEmits(["toggleSidebar"]);
 const menu = ref(); 
 const { t } = useI18n();
+const userStore = useUserStore();
 const toggleSidebar = () => {
   emit("toggleSidebar");
 };
@@ -79,12 +85,18 @@ const items = ref([
 ]);
 const logout = async () => {
   try {
+    await api.post(ApiConstant.LOGOUT);
     localStorage.clear();
     sessionStorage.clear();
+    userStore.$reset();
     modal.value?.close();
+    router.replace(PAGE_ROUTE.LOGIN);
   } catch (e) {
     console.log(e);
   }
+};
+const back = () => {
+  router.back();
 };
 </script>
 <style lang="scss" scoped>
