@@ -1,5 +1,6 @@
 <template>
     <div>
+        <TitleCommon :title="t('page.userCreate')" />
         <DataTable
                 :value="storeUser.getUsers"
                 class="p-datatable-sm"
@@ -43,6 +44,7 @@
     import { ref, onMounted } from "vue";
     import { useRouter } from "vue-router";
     import { useUserStore } from "@/stores/user";
+    import TitleCommon from "@/components/common/TitleCommon.vue"
     import { useI18n } from "vue-i18n";
     const router = useRouter();
     const storeUser = useUserStore();
@@ -59,7 +61,7 @@
         router.push(`/user/${event.data.id}/update`);
     }
     const gotToCreate = () =>{
-        console.log(11)
+        router.push(`/user/create`);
     }
     onMounted(
         () => {

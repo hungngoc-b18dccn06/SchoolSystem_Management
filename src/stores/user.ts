@@ -19,12 +19,20 @@ export interface Pagination {
     total: number,
     perPage: number
 }
-
+interface FormUser {
+    first_name: string;
+    last_name: string;
+    email: string;
+    status: string;
+    role: string;
+    password?: string;
+}
 interface UserStore {
     profile: User,
     users: User[],
     paramSearch: ParamsSearch,
     pagination: Pagination,
+    formUser: FormUser
 }
 export const useUserStore = defineStore({
     id: "user",
@@ -52,6 +60,13 @@ export const useUserStore = defineStore({
                 total: 0,
                 perPage: 0,
             },
+            formUser:{
+                first_name: '',
+                last_name: '',
+                email: '',
+                status: DEFAULT.USER_STATUS[0].value,
+                role: DEFAULT.USER_ROLE[0].value,
+            }   
         }
     },
     getters:{
@@ -63,6 +78,7 @@ export const useUserStore = defineStore({
             role: (DEFAULT.USER_ROLE.find(el => el.value == e.role) ?? DEFAULT.USER_ROLE[0]).label,
             status: (DEFAULT.USER_STATUS.find(el => el.value == e.status) ?? DEFAULT.USER_STATUS[0]).label,
         }))),
+        getFormUser: (state => state.formUser)
     },
     actions:{
         async getListUser(page?: number) {
@@ -76,7 +92,7 @@ export const useUserStore = defineStore({
             //     }
             //   });
               const listUser = await axios.get('http://dev.base.api.skylab.vn/api/users', {headers: {
-                Authorization: 'Bearer 408|CciCcG1uWp81smpDrdAfOi2nF0EwuZtpisqlnQSX'
+                Authorization: 'Bearer 414|jT62FT7ik4NH0eduxBLTw0ZX3EF5D4V52g6Gytff'
             }});  
             this.users = listUser.data.data.data.map((item:any) => ({
                 ...item,
