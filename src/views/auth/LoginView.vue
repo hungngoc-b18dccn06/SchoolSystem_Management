@@ -10,24 +10,29 @@
                      {{ t("user.title") }}
                     </div>
                     <div class="field field-input my-5">
-                        <Field name="email">
+                        <Field name="email" v-slot="{meta: metaField, field, errorMessage}">
                             <div class="p-inputgroup">
                             <span class="p-inputgroup-addon">
                                 <i class="pi pi-envelope"></i>
                             </span>
                             <InputText
+                                v-bind="field"
                                 type="text"
+                                :class="{'p-invalid': errorMessage && !metaField.valid && metaField.touched}"
                                 :placeholder="t('user.emailAdress')"
                                 autocomplete="off"
                             />
                             </div>
+                            <div class="absolute line-height-1 pt-2">
+                              <small v-if="errorMessage && !metaField.valid && metaField.touched" class="p-error">{{ errorMessage }}</small>
+                            </div>
                         </Field>
                     </div>
                     <div class="field-input custom-password my-5 pb-1">
-                        <Field name="password">
+                        <Field name="password" v-slot="{meta: metaField, field, errorMessage}">
                             <div class="p-inputgroup">
                             <span class="p-inputgroup-addon">
-                                <i class="pi pi-lock"></i>
+                                <i :class="[errorMessage && !metaField.valid && metaField.touched ? 'pi pi-lock p-invalid-icon' : 'pi pi-lock']"></i>
                             </span>
                             <span class="p-input-icon-right w-full">
                                 <InputText
@@ -65,7 +70,7 @@
               class="text-color underline font-semibold mt-4"
               >{{ t("user.forgot") }}</router-link
             >
-            <!-- <router-link :to="PAGE_ROUTE.REGISTER" class="">{{
+            <!-- <router-link :to="PAGE_ROUTE.REGISTER" class="text-color underline font-semibold mt-4">{{
               t("user.register")
             }}</router-link> -->
           </div>
@@ -76,21 +81,90 @@
   </div>
 </template>
 
-<script setup lang='ts'>
+<script setup lang="ts">
+import api from "@/api";
 import Popup from "@/components/PopupConfirm.vue";
 import Sidebar from "@/layout/AuthSidebar.vue";
+import CONST, { ACCESS_TOKEN, AppConstant, ApiConstant, REMIND } from "@/const";
+
+import type { ResponseLogin } from "@/const/api.const";
+import PAGE_ROUTE from "@/const/pageRoute";
+import type { AxiosResponse } from "axios";
+import { useToast } from "primevue/usetoast";
 import { onMounted, reactive, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
-import PAGE_ROUTE from "@/const/pageRoute";
 import { Field, useForm } from "vee-validate";
 import * as yup from "yup";
-const showPass = ref(false);
+
 const { t } = useI18n();
 const router = useRouter();
 const state = reactive({
   loading:false,
 });
+const modal = ref<InstanceType<typeof Popup> | null>(null);
+const submitted = ref(false);
+const showPass = ref(false);
+const toast = useToast();
+onMounted(() => {
+  localStorage.removeItem(ACCESS_TOKEN);
+  const info = localStorage.getItem(REMIND);
+  if (info?.length) {
+    // state.email = "";
+    // state.password = "";
+  }
+});
+
+const openModal = () => {
+  modal.value?.open();
+};
+
+const schema = yup.object({
+  email: yup
+    .string()
+    .trim()
+    .email(t('message.emailInvalid'))
+    .required(t('message.required'))
+    .max(100, t('message.maxLength100')),
+  password: yup
+    .string()
+    .matches(CONST.REGEX_PASSWORD, t('message.passwordInvalid'))
+    .required(t('message.required'))
+});
+
+const {resetForm, values, errors, handleSubmit} = useForm({
+  validationSchema: schema,
+  initialValues: {
+    email: "",
+    password: "",
+  },
+});
+
+const handleSubmitForm = handleSubmit(async (data) => {
+    console.log(11)
+  submitted.value = true;
+  const user = {
+    ...data
+    // role: "user",
+  };
+  state.loading = true;
+  try {
+    const reponse: AxiosResponse<ResponseLogin> = await api.post(
+      ApiConstant.LOGIN,
+      user
+    );
+    await loginSuccessCallback(reponse.data.data.access_token);
+  } catch (e:any) {
+    console.log(e);
+  } finally {
+    state.loading = false;
+  }
+});
+
+async function loginSuccessCallback(accessToken: string) {
+  localStorage.setItem(ACCESS_TOKEN, accessToken);
+  router.push(PAGE_ROUTE.HOME);
+}
 </script>
 
 <style lang="scss" scoped>
