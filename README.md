@@ -18,6 +18,7 @@ php artisan serve
 ```
 <br> 
 Fontend: VueJS(PrimeVue + TypeScript + Pinia)
+<br>
 ## Project Setup
 
 ```sh
