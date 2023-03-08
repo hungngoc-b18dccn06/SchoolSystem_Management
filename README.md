@@ -6,7 +6,8 @@
 composer install
 
 ```
-```sh Run and generate migrate laravel
+### Run and generate migrate laravel
+```sh 
 php artisan migrate:refresh --seed
 ```
 
