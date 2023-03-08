@@ -104,7 +104,17 @@ export const useUserStore = defineStore({
             const res = await api.post(ApiConstant.CREATE_USER,data);
             await this.getListUser();
             return res
-        }
+        },
+
+        async apiUpdateUser(data: FormUser , id: number) {
+            const res = await api.put(ApiConstant.UPDATE_USER(id), data);
+            await this.getListUser();
+            return res;
+        },
+        async getUserDetail(id: number) {
+            const response = await api.get<any>(ApiConstant.GET_DETAIL_USER(id));
+            this.formUser = response.data.data;
+        },
     
     }
 })
