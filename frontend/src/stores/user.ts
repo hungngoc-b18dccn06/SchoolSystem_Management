@@ -3,6 +3,7 @@ import api from "@/api";
 import {format} from "date-fns";
 import CONST, {ApiConstant, DEFAULT} from "@/const";
 import axios from "axios";
+import { da } from "date-fns/locale";
 export interface  User {
     id?: number,
     email: string;
@@ -97,6 +98,22 @@ export const useUserStore = defineStore({
                 created_at: format(new Date(item.created_at), CONST.FORMAT_DATE),
             }));
     
+        },
+
+        async apiCreateUser(data: FormUser){
+            const res = await api.post(ApiConstant.CREATE_USER,data);
+            await this.getListUser();
+            return res
+        },
+
+        async apiUpdateUser(data: FormUser , id: number) {
+            const res = await api.put(ApiConstant.UPDATE_USER(id), data);
+            await this.getListUser();
+            return res;
+        },
+        async getUserDetail(id: number) {
+            const response = await api.get<any>(ApiConstant.GET_DETAIL_USER(id));
+            this.formUser = response.data.data;
         },
     
     }

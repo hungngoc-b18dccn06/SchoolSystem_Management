@@ -1,14 +1,14 @@
 <template>
     <div>
-        <TitleCommon :title="t('page.userCreate')" />
-        <FormInfo ref="formInfo" @submit="handleSubmit" @cancel="handleBack"/>
+        <TitleCommon :title="t('page.userUpdate')" />
+        <FormInfo @submit="handleSubmit" @cancel="handleBack"/>
         <Popup
             ref="modal"
             :labelCancel="t('common.no')"
             :labelOk="t('common.yes')"
             :header="t('common.confirm')"
             :content="t('common.popupConfirmSaveContent')"
-            :ok="createUser"
+            :ok="updateUser"
             :cancel="closeModal"
         ></Popup>
     </div>
@@ -28,9 +28,36 @@
     const { t } = useI18n();
     const storeUser = useUserStore();
     const toast = useToast();
-    const router = useRouter();
     const modal = ref<InstanceType<typeof Popup> | null>(null);
-    const formInfo = ref<InstanceType<typeof FormInfo> | null>(null);
+    const currentRoute = useRoute();
+    const router = useRouter();
+
+    const idUser = Number(currentRoute.params.id);
+
+    onMounted(async () => {
+        await storeUser.getUserDetail(idUser);
+    });
+    const handleSubmit = () => {
+        modal.value?.open();
+    };
+    const handleBack = () => {
+        router.push({path: PAGE_ROUTE.USER_LIST})
+    };
+    const closeModal = () => {
+        modal.value?.close();
+    };
+    const updateUser = async () =>{
+        try {
+            closeModal();
+            const res = await storeUser.apiUpdateUser(storeUser.getFormUser, idUser )
+            toast.add({group: "message", severity: "success", summary: res.data.message, life: CONST.TIME_DELAY, closable: false});
+            await storeUser.apiUpdateUser(storeUser.getFormUser, idUser )
+            storeUser.getProfileDetail();
+            router.push({path: PAGE_ROUTE.USER_LIST});
+        } catch (e:any) {
+            closeModal();
+        }
+    }
 </script>
 
 <style>
