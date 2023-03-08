@@ -5,6 +5,7 @@ import UserList from '@/components/user/List.vue'
 import UserUpdate from '@/views/users/UpdateUser.vue'
 import UserCreate from '@/views/users/CreateUser.vue'
 import LoginView from "@/views/auth/LoginView.vue";
+import ProfileVue from '@/components/profile/Profile.vue';
 import PAGE_ROUTE, { publicPath } from "@/const/pageRoute";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -40,6 +41,11 @@ const router = createRouter({
         //   component: CategoryList
         // },
       ]
+    },
+    {
+      path: PAGE_ROUTE.LOGIN,
+      name: "login",
+      component: LoginView,
     },
     {
       path: PAGE_ROUTE.LOGIN,

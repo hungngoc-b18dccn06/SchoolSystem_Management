@@ -16,7 +16,7 @@ const enum PAGE_ROUTE {
   USER_LIST = "/users",
   USER_CREATE = "/user/create",
   USER_UPDATE = "/user/:userId/update",
-
+  PROFILE = "/user/:userId/update",
   //Category
   CATEGORY_LIST = "/categories",
 }
