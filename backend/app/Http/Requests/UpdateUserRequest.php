@@ -39,6 +39,7 @@ class UpdateUserRequest extends FormRequest
             'password' => 'nullable|string|regex:/^[a-zA-Z0-9!@#$%^&*()_]{8,16}$/',
             'role' => 'nullable|in:' . implode(",", Role::asArray()),
             'status' => 'nullable|in:' . implode(",", Status::asArray()),
+            'avatar' => 'file|nullable|mimes:jpeg,jpg,png,gif|max:2048'
         ];
     }
 
@@ -62,6 +63,8 @@ class UpdateUserRequest extends FormRequest
         }
         if ($this->has('status')) {
             $data['status'] = $this->status;
+        }if ($this->has('avatar')) {
+            $data['avatar'] = $this->file('avatar');
         }
 
         return $data;
