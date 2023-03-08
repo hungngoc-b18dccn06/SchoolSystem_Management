@@ -3,6 +3,7 @@ import api from "@/api";
 import {format} from "date-fns";
 import CONST, {ApiConstant, DEFAULT} from "@/const";
 import axios from "axios";
+import { da } from "date-fns/locale";
 export interface  User {
     id?: number,
     email: string;
@@ -98,6 +99,12 @@ export const useUserStore = defineStore({
             }));
     
         },
+
+        async apiCreateUser(data: FormUser){
+            const res = await api.post(ApiConstant.CREATE_USER,data);
+            await this.getListUser();
+            return res
+        }
     
     }
 })

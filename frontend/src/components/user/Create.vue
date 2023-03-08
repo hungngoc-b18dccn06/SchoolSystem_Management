@@ -32,6 +32,34 @@
     const router = useRouter();
     const modal = ref<InstanceType<typeof Popup> | null>(null);
     const formInfo = ref<InstanceType<typeof FormInfo> | null>(null);
+
+    const createUser = async () => {
+        const data = storeUser.getFormUser;
+        try {
+            const res = await storeUser.apiCreateUser(data);
+            toast.add({group: "message", severity: "success", summary: res.data.message, life: CONST.TIME_DELAY, closable: false});
+            closeModal();
+            router.push({path: PAGE_ROUTE.USER_LIST});
+        } catch (e:any) {
+            closeModal();
+        }
+    };
+    const resetForm = ()  => {
+        formInfo.value?.handleResetForm();
+    }
+    const handleSubmit = () => {
+        modal.value?.open();
+    };
+    const handleBack = () => {
+        router.push({path: PAGE_ROUTE.USER_LIST})
+    };
+    const closeModal = () => {
+        modal.value?.close();
+    };
+    onMounted(async () => {
+        resetForm();
+    });
+
 </script>
 
 <style>

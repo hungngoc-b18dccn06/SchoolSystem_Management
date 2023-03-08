@@ -1,7 +1,31 @@
 <script setup lang="ts">
 import { RouterView } from "vue-router";
 import { useRequestStore } from "@/stores/request";
+import { useToast } from "primevue/usetoast";
+import { watch } from "vue";
+const toast = useToast();
 const requestStore = useRequestStore();
+watch(
+  () => requestStore.error,
+  (newValue) => {
+    if (!newValue) {
+      return;
+    }
+    const message: any = newValue?.response?.data;
+    toast.add({
+      severity: "error",
+      summary: message.errors ? message.errors[Object.keys(message.errors)[0]][0] : message.message,
+      life: 3000,
+      group: "message",
+      closable: false,
+      contentStyleClass: "py-1",
+    });
+  }
+);
+watch(
+  () => requestStore.getIsFetcing.length,
+  (newValue) => (document.body.style.overflowY = newValue ? "hidden" : ""),
+);
 </script>
 <template>
   <div
@@ -15,6 +39,15 @@ const requestStore = useRequestStore();
     ></div>
     <ProgressSpinner class="absolute z-1" />
   </div>
+  <Toast group="message" position="top-center">
+      <template #message="slotProps">
+        <i v-if="slotProps.message.severity == 'error'" class="p-toast-message-icon pi pi-times"></i>
+        <i v-if="slotProps.message.severity == 'success'" class="p-toast-message-icon pi pi-check"></i>
+        <div class="p-toast-message-text">
+          <span class="p-toast-summary">{{ slotProps.message.summary }}</span>
+        </div>
+      </template>
+    </Toast>
   <RouterView />
 </template>
 <style scoped>
