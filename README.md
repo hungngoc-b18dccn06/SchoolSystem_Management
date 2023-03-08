@@ -4,6 +4,10 @@
 
 ```sh
 composer install
+
+```
+```sh Run and generate migrate laravel
+php artisan migrate:refresh --seed
 ```
 
 ### Compile and Hot-Reload for Development
