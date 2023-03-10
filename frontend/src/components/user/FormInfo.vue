@@ -7,6 +7,7 @@ import * as yup from "yup";
 import { Field, ErrorMessage, useForm } from "vee-validate";
 import { useUserStore } from "@/stores/user";
 import FooterCommon from "@/components/common/FooterCommon.vue";
+import Image from "primevue/image";
 const storeUser = useUserStore();
 const { t } = useI18n();
 const currentRoute = useRoute();
@@ -74,17 +75,18 @@ const onFilePicked = (e) => {
     fr.addEventListener('load', () => {
       imageUrl.value = fr.result;
       imageFile.value = files[0];
+      console.log(fr.result)
+      storeUser.getFormUser.avatar = fr.result;
     });
   } else {
     imageName.value = '';
     imageFile.value = null;
     imageUrl.value = '';
   }
+ 
 };
 
 const handleSubmit = async () => {
-    let formData = new FormData();
-    formData.append('imageFile', imageFile.value)
     if ((await validate()).valid) {
       emit("submit");
     };
@@ -94,7 +96,7 @@ const handleBack = async () => {
 };
 onMounted(async () => {
         
-    });
+});
 
 defineExpose({
   handleResetForm,
@@ -171,12 +173,12 @@ defineExpose({
       </div>
       <div class="grid mt-6">
         <div class="title-card col-4">
-          <label class="title-field inline-block mt-2">Avatar</label>
+          <label class="title-field inline-block mt-2">アバター</label>
         </div>
         <div class="col-8">
-          <div class="flex justify-center items-center flex-col">
-            <div v-if="imageUrl.value">
-              <img class="max-w-full h-auto object-contain" :src="imageUrl.value" alt="" />
+          <div class="justify-center items-center flex-col" style="height:140px; max-width:230px">
+            <div v-if="storeUser.getFormUser.avatar">
+              <Image class="max-w-full h-auto object-contain" :src="storeUser.getFormUser.avatar" alt=""  />
             </div>
             <input
               ref="image"

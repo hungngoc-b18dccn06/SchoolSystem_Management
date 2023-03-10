@@ -27,6 +27,7 @@ interface FormUser {
     status: string;
     role: string;
     password?: string;
+    avatar?: any;
 }
 interface UserStore {
     profile: User,
@@ -67,6 +68,8 @@ export const useUserStore = defineStore({
                 email: '',
                 status: DEFAULT.USER_STATUS[0].value,
                 role: DEFAULT.USER_ROLE[0].value,
+                avatar: {},
+                password: ''
             }   
         }
     },
@@ -101,13 +104,29 @@ export const useUserStore = defineStore({
         },
 
         async apiCreateUser(data: FormUser){
-            const res = await api.post(ApiConstant.CREATE_USER,data);
+            let formData = new FormData();
+            formData.append('avatar', data.avatar );
+            formData.append('first_name', data.first_name );
+            formData.append('last_name', data.last_name );
+            formData.append('status', data.status );
+            formData.append('role', data.role );
+            formData.append('email', data.email );
+            formData.append('password', data?.password );
+            console.log(111)
+            const res = await api.post(ApiConstant.CREATE_USER,formData);
             await this.getListUser();
             return res
         },
 
         async apiUpdateUser(data: FormUser , id: number) {
-            const res = await api.put(ApiConstant.UPDATE_USER(id), data);
+            let formData = new FormData();
+            formData.append('avatar', data.avatar );
+            formData.append('first_name', data.first_name );
+            formData.append('last_name', data.last_name );
+            formData.append('status', data.status );
+            formData.append('role', data.role );
+            formData.append('email', data.email );
+            const res = await api.put(ApiConstant.UPDATE_USER(id), formData);
             await this.getListUser();
             return res;
         },

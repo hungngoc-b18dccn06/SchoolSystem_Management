@@ -58,6 +58,7 @@
     };
     onMounted(async () => {
         resetForm();
+        console.log(storeUser.getFormUser)
     });
 
 </script>
