@@ -35,6 +35,7 @@
 
     const createUser = async () => {
         const data = storeUser.getFormUser;
+        console.log(data);
         try {
             const res = await storeUser.apiCreateUser(data);
             toast.add({group: "message", severity: "success", summary: res.data.message, life: CONST.TIME_DELAY, closable: false});
