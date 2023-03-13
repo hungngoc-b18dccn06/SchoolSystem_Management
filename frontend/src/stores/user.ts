@@ -97,7 +97,11 @@ export const useUserStore = defineStore({
                 name: item.first_name + " " + item.last_name,
                 created_at: format(new Date(item.created_at), CONST.FORMAT_DATE),
             }));
-    
+            this.pagination = {
+                currentPage: listUser.data.data.current_page,
+                total: listUser.data.data.total,
+                perPage: listUser.data.data.per_page,
+            };
         },
 
         async apiCreateUser(data: FormUser){
@@ -115,6 +119,10 @@ export const useUserStore = defineStore({
             const response = await api.get<any>(ApiConstant.GET_DETAIL_USER(id));
             this.formUser = response.data.data;
         },
-    
+        async deleteUser(id: number) {
+            const res = await api.delete<any>(ApiConstant.DELETE_USER(id));
+            this.getListUser();
+            return res;
+        },
     }
 })

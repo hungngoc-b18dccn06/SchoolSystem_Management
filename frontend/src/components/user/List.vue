@@ -36,18 +36,47 @@
                         </div>
                     </div>
                 </template>
+             <template #footer>
+                    <Paginator
+                        v-if="storeUser.getPagination.total > 0"
+                        :first="(storeUser.getPagination.currentPage - 1) * storeUser.getPagination.perPage"
+                        :rows="storeUser.getPagination.perPage"
+                        :totalRecords="storeUser.getPagination.total"
+                        template="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+                        :currentPageReportTemplate="AppConstant.CURRENT_PAGE_REPORT_TEMPLATE"
+                        @page="changePage">
+                    </Paginator>
+                </template>   
         </DataTable>
+        <Popup
+                ref="modal"
+                :labelCancel="t('common.no')"
+                :labelOk="t('common.yes')"
+                :header="t('common.confirm')"
+                :content="t('common.popupDeleteContent')"
+                :ok="confirm"
+                :cancel="cancel"
+            ></Popup>
     </div>
 </template>
 <script setup lang="ts">
-    import {PrimeIcons} from 'primevue/api';
-    import { ref, onMounted } from "vue";
-    import { useRouter } from "vue-router";
-    import { useUserStore } from "@/stores/user";
+    import {PrimeIcons, FilterMatchMode, FilterOperator} from 'primevue/api';
+    import Paginator from 'primevue/paginator';
     import TitleCommon from "@/components/common/TitleCommon.vue"
+    import Popup from "@/components/PopupConfirm.vue";
+    import { useUserStore } from "@/stores/user";
+    import FooterCommon from "@/components/common/FooterCommon.vue";
+    import { ref, onMounted, watch } from "vue";
+    import {useRoute, useRouter} from "vue-router";
+    import CONST, {AppConstant} from "@/const";
+    import {useToast} from "primevue/usetoast";
     import { useI18n } from "vue-i18n";
+    import {number} from "yup";
     const router = useRouter();
     const storeUser = useUserStore();
+    const totalRecords = ref();
+    const idUser = ref(0);
+    const toast = useToast();
     const {t} = useI18n();
     const columns = [
         {field: 'id', header: 'ID'},
@@ -63,6 +92,46 @@
     const gotToCreate = () =>{
         router.push(`/user/create`);
     }
+    const filters = ref({
+        global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    });
+    const modal = ref<InstanceType<typeof Popup> | null>(null);
+    const openModal = () => {
+        modal.value?.open();
+    };
+    const closeModal = () => {
+        modal.value?.close();
+    };
+    const deleteUser = (event:any) =>{
+        idUser.value = event;
+        modal.value?.open();
+    };
+     const changePage = async (event: any) => {
+        storeUser.getListUser(event.page + 1);
+    };
+    const confirm = async () =>{
+        try {
+            closeModal();
+            const res = await storeUser.deleteUser(idUser.value);
+            toast.add({group: "message", severity: "success", summary: res.data.message, life: CONST.TIME_DELAY,  closable: false});
+        } catch (e) {
+            console.log(e);
+            closeModal();
+        }
+    }
+    const cancel = () => {
+        closeModal();
+    }
+    watch(
+        () => storeUser.getParamSearch.search_text,
+        (value) => {
+            setTimeout(function () {
+                if (value === storeUser.getParamSearch.search_text) {
+                    storeUser.getListUser();
+                }
+            }, 1000);
+        }
+    );
     onMounted(
         () => {
             storeUser.getListUser();
