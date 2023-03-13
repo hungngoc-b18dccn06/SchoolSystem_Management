@@ -1,17 +1,23 @@
 <script lang="ts" setup>
 import CONST, { DEFAULT, AppConstant } from "@/const/";
-import { onMounted, reactive } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import * as yup from "yup";
 import { Field, ErrorMessage, useForm } from "vee-validate";
 import { useUserStore } from "@/stores/user";
 import FooterCommon from "@/components/common/FooterCommon.vue";
+import Image from "primevue/image";
 const storeUser = useUserStore();
 const { t } = useI18n();
 const currentRoute = useRoute();
 const emit = defineEmits(["submit", "cancel"]);
 const isCreate = currentRoute.path.search("create") >= 0;
+const imageUrl = ref('');
+const imageFile = ref(null);
+const imageName = ref('');
+const imageInput = ref(null);
+
 const schema = yup.object({
   first_name: yup
     .string()
@@ -57,15 +63,40 @@ const handleResetForm = () => {
       },
   });
 };
+const onFilePicked = (e) => {
+  const files = e.target.files;
+  if (files.length > 0) {
+    imageName.value = files[0].name;
+    if (imageName.value.lastIndexOf('.') <= 0) {
+      return;
+    }
+    const fr = new FileReader();
+    fr.readAsDataURL(files[0]);
+    fr.addEventListener('load', () => {
+      imageUrl.value = fr.result;
+      imageFile.value = files[0];
+      console.log(fr.result)
+      storeUser.getFormUser.avatar = fr.result;
+    });
+  } else {
+    imageName.value = '';
+    imageFile.value = null;
+    imageUrl.value = '';
+  }
+ 
+};
 
 const handleSubmit = async () => {
-  if ((await validate()).valid) {
-    emit("submit");
-  };
+    if ((await validate()).valid) {
+      emit("submit");
+    };
 };
 const handleBack = async () => {
   emit("cancel");
 };
+onMounted(async () => {
+        
+});
 
 defineExpose({
   handleResetForm,
@@ -127,18 +158,36 @@ defineExpose({
             :class="{ 'is-invalid': errors.email }"
             name="email"
             v-slot="{ field, value }"
-            v-model="storeUser.getFormUser.email"
-          >
-            <div class="p-inputgroup">
-              <InputText
-                class="w-full"
-                :placeholder="t('user.emailAdress')"
-                v-bind="field"
-                :modelValue="value"
-              />
-            </div>
+            v-model="storeUser.getFormUser.email">
+              <div class="p-inputgroup">
+                <InputText
+                  class="w-full"
+                  :placeholder="t('user.emailAdress')"
+                  v-bind="field"
+                  :modelValue="value"
+                />
+              </div>
             <ErrorMessage class="subtext p-error absolute pt-1" name="email" />
           </Field>
+        </div>
+      </div>
+      <div class="grid mt-6">
+        <div class="title-card col-4">
+          <label class="title-field inline-block mt-2">アバター</label>
+        </div>
+        <div class="col-8">
+          <div class="justify-center items-center flex-col" style="height:140px; max-width:230px">
+            <div v-if="storeUser.getFormUser.avatar">
+              <Image class="max-w-full h-auto object-contain" :src="storeUser.getFormUser.avatar" alt=""  />
+            </div>
+            <input
+              ref="image"
+              type="file"
+              accept=".jpg,.png,.jpeg"
+              @change="onFilePicked($event)"
+            />
+            <div v-if="imageName.value">{{imageName.value}}</div>
+          </div>
         </div>
       </div>
       <div class="grid mt-6" v-if="isCreate">
@@ -248,5 +297,8 @@ defineExpose({
 <style scoped>
   .layout-wrapper .p-error{
     padding: 0.75rem 0rem;
+  }
+  img.p-fileupload-file-thumbnail{
+    width: 30% !important; 
   }
 </style>

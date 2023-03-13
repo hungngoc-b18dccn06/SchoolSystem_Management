@@ -10,7 +10,7 @@ use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Image;
 class UserController extends Controller
 {
     use HandleJsonResponses;
@@ -60,7 +60,16 @@ class UserController extends Controller
         $this->authorize('user.store', Auth::user());
 
         $this->userService->create($request->data());
+        $user = $this->userService->create($request->data());
+        if ($request->avatar) {
+            $avatar = time() . '.' . explode('/', explode(':', substr($request->avatar, 0, strpos($request->task_file, ';')))[1])[1];
 
+            Image::make($request->avatar)->save(public_path('images/' . $avatar));
+
+            // Associate the file path with the newly created user
+            $user->avatar = $avatar;
+            $user->save();
+        }
         return $this->respondOk([
             'message' => __('messages.ok')
         ]);

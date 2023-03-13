@@ -32,6 +32,7 @@ class CreateUserRequest extends FormRequest
             'password' => 'required|string|regex:/^[a-zA-Z0-9!@#$%^&*()_]{8,16}$/',
             'role' => 'required|in:' . implode(",", Role::asArray()),
             'status' => 'required|in:' . implode(",", Status::asArray()),
+            'avatar' => 'file|nullable|mimes:jpeg,jpg,png,gif|max:2048'
         ];
     }
 
@@ -55,6 +56,8 @@ class CreateUserRequest extends FormRequest
         }
         if ($this->has('role')) {
             $data['role'] = $this->role;
+        }if ($this->has('avatar')) {
+            $data['avatar'] = $this->file('avatar');
         }
 
         return $data;
