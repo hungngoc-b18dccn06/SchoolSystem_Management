@@ -48,11 +48,12 @@
     };
     const updateUser = async () =>{
         try {
+            const data = storeUser.getFormUser;
+            console.log(data)
             closeModal();
-            const res = await storeUser.apiUpdateUser(storeUser.getFormUser, idUser )
+            const res = await storeUser.apiUpdateUser(data, idUser )
             toast.add({group: "message", severity: "success", summary: res.data.message, life: CONST.TIME_DELAY, closable: false});
-            await storeUser.apiUpdateUser(storeUser.getFormUser, idUser )
-            storeUser.getProfileDetail();
+            await storeUser.apiUpdateUser(data, idUser )
             router.push({path: PAGE_ROUTE.USER_LIST});
         } catch (e:any) {
             closeModal();

@@ -16,7 +16,7 @@ const isCreate = currentRoute.path.search("create") >= 0;
 const imageUrl = ref('');
 const imageFile = ref(null);
 const imageName = ref('');
-const imageInput = ref(null);
+const imagePreView = ref(null);
 
 const schema = yup.object({
   first_name: yup
@@ -65,6 +65,8 @@ const handleResetForm = () => {
 };
 const onFilePicked = (e) => {
   const files = e.target.files;
+   //const file = (e.target as HTMLInputElement).files?.[0];
+   //console.log(file)
   if (files.length > 0) {
     imageName.value = files[0].name;
     if (imageName.value.lastIndexOf('.') <= 0) {
@@ -74,9 +76,9 @@ const onFilePicked = (e) => {
     fr.readAsDataURL(files[0]);
     fr.addEventListener('load', () => {
       imageUrl.value = fr.result;
+      imagePreView.value = fr.result;
       imageFile.value = files[0];
-      console.log(fr.result)
-      storeUser.getFormUser.avatar = fr.result;
+      storeUser.getFormUser.avatar = files[0];
     });
   } else {
     imageName.value = '';
@@ -177,7 +179,10 @@ defineExpose({
         </div>
         <div class="col-8">
           <div class="justify-center items-center flex-col" style="height:140px; max-width:230px">
-            <div v-if="storeUser.getFormUser.avatar">
+            <div v-if="imagePreView">
+              <Image class="max-w-full h-auto object-contain" :src="imagePreView" alt=""  />
+            </div>
+            <div v-if="!isCreate">
               <Image class="max-w-full h-auto object-contain" :src="storeUser.getFormUser.avatar" alt=""  />
             </div>
             <input
@@ -186,7 +191,6 @@ defineExpose({
               accept=".jpg,.png,.jpeg"
               @change="onFilePicked($event)"
             />
-            <div v-if="imageName.value">{{imageName.value}}</div>
           </div>
         </div>
       </div>

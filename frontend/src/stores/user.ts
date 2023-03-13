@@ -69,7 +69,7 @@ export const useUserStore = defineStore({
                 status: DEFAULT.USER_STATUS[0].value,
                 role: DEFAULT.USER_ROLE[0].value,
                 avatar: {},
-                password: ''
+                password: '',
             }   
         }
     },
@@ -116,7 +116,6 @@ export const useUserStore = defineStore({
             formData.append('role', data.role );
             formData.append('email', data.email );
             formData.append('password', data?.password );
-            console.log(111)
             const res = await api.post(ApiConstant.CREATE_USER,formData);
             await this.getListUser();
             return res

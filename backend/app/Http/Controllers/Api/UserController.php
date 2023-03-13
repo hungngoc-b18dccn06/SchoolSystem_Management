@@ -10,7 +10,7 @@ use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Image;
+use Illuminate\Support\Facades\Storage;
 class UserController extends Controller
 {
     use HandleJsonResponses;
@@ -47,8 +47,14 @@ class UserController extends Controller
         if (! $user) {
             return $this->respondNotFound(['message' => __('messages.not_found')]);
         }
-
-        $this->userService->update($user, $request->data());
+        $data = $request->data();
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            Storage::putFile('public/images/', $file);
+            $path = 'public/images/' . $file->getClientOriginalName() . '.' . $file->getExtension();
+            $data['avatar'] = $path;
+        }
+        $this->userService->update($user, $request->$data);
 
         return $this->respondOk([
             'message' => __('messages.ok')
@@ -58,18 +64,17 @@ class UserController extends Controller
     public function store(CreateUserRequest $request): JsonResponse
     {
         $this->authorize('user.store', Auth::user());
+        $data = $request->data();
 
-        $this->userService->create($request->data());
-        $user = $this->userService->create($request->data());
-        if ($request->avatar) {
-            $avatar = time() . '.' . explode('/', explode(':', substr($request->avatar, 0, strpos($request->task_file, ';')))[1])[1];
-
-            Image::make($request->avatar)->save(public_path('images/' . $avatar));
-
-            // Associate the file path with the newly created user
-            $user->avatar = $avatar;
-            $user->save();
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            Storage::putFile('public/images/', $file);
+            $path = 'public/images/' . $file->getClientOriginalName() . '.' . $file->getExtension();
+            $data['avatar'] = $path;
         }
+
+        $this->userService->create($data);
+
         return $this->respondOk([
             'message' => __('messages.ok')
         ]);
@@ -84,6 +89,9 @@ class UserController extends Controller
             return $this->respondNotFound([
                 'message' => __('messages.not_found')
             ]);
+        }
+        if ($user->avatar) {
+            Storage::delete($user->avatar);
         }
         $user->delete();
         return $this->respondOk([
