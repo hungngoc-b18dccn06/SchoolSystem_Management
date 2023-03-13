@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('last_name');
             $table->string('role');
             $table->string('status')->default(0);
+            $table->string('avatar')->nullable();
             $table->timestamps();
         });
     }
