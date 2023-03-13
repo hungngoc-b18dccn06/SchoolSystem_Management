@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 class UserService
 {
     protected User $user;
-    const LIMIT_SEARCH_USER = 20;
+    const LIMIT_SEARCH_USER = 10;
     protected UploadService $uploadService;
 
     public function __construct(
