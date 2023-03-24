@@ -1,13 +1,18 @@
 import {defineStore} from "pinia";
-import axios from "axios";
-import {ApiConstant} from "@/const";
 import api from "@/api";
+import {ApiConstant} from "@/const";
 interface CategoryStore {
     categories: CategoryDetail[];
 }
 export interface CategoryDetail {
-    id: number,
+    id?: number,
     name: string,
+    display_order: number,
+    category?: string,
+    status?: number,
+}
+export interface CategoryForm {
+    categories: CategoryDetail,
 }
 
 export const useCategoryStore = defineStore({
@@ -22,15 +27,24 @@ export const useCategoryStore = defineStore({
     },
     actions:{
         async apiGetCategories() {
-            const res = await api.get("http://127.0.0.1:8000" + ApiConstant.GET_LIST_CATEGORY);
-            this.categories = res.data.data;
-            console.log(this.categories)
+            const res = await api.get(ApiConstant.GET_LIST_CATEGORY);
+            this.categories = res.data.data.sort((a: CategoryDetail, b: CategoryDetail) => (a.display_order - b.display_order));
+
         },
-        async apiUpdateCategories(data: CategoryDetail) {
-            const res = await axios.post("http://127.0.0.1:8000" + ApiConstant.UPDATE_CATEGORY, data, {headers: {
-                Authorization: 'Bearer 799|54IAeLUQrfxLYVClLwlAcZ8ao8cs9BpKzt1YUhFv'
-            }});
+        async apiUpdateCategories(data: CategoryForm) {
+            const res = await api.post(ApiConstant.UPDATE_CATEGORY, data);
             await this.apiGetCategories();
+            return res;
+        },
+
+        async setCategoryList(data: CategoryDetail[]) {
+            this.categories = data;
+        },
+
+        async apiDeleteCategories($id: number) {
+            const res = await api.delete<any>(ApiConstant.DELETE_CATEGORY($id));
+            // await this.apiGetCategories();
+            return res;
         },
     }
 
