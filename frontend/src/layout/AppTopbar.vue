@@ -15,7 +15,7 @@
           <Button
             type="button"
             icon="pi pi-user"
-            :label="'Hưng Lê Ngọc'"
+            :label="userStore.getProfile.name ?? ''"
             @click="toggle"
             class="p-button-text shadow-none"
             aria-haspopup="true"
@@ -67,6 +67,10 @@ const modal = ref<InstanceType<typeof Popup> | null>(null);
 const openModal = () => {
   modal.value?.open();
 };
+const editProfile = () =>{
+  console.log(userStore.getProfile)
+  router.push(`/profile`);
+}
 const items = ref([
   {
     items: [
@@ -78,7 +82,7 @@ const items = ref([
       {
         label: t("menu.editProfile"),
         icon: "pi pi-user-edit",
-        command: openModal,
+        command: editProfile,
       },
     ],
   },

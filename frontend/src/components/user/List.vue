@@ -135,7 +135,7 @@
     onMounted(
         () => {
             storeUser.getListUser();
-            console.log(11)
+            storeUser.getProfileDetail();
         }
     )
 </script>

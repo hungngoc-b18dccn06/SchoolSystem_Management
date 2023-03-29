@@ -19,6 +19,7 @@ export default [
                 label: "管理者アカウント管理",
                 icon: "pi pi-user",
                 to: PAGE_ROUTE.USER_LIST,
+                public:false,
             },
         ],
     },

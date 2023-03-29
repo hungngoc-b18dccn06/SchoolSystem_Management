@@ -25,6 +25,7 @@ Route::namespace('Auth')->middleware(['guest:api'])->group(function() {
 Route::middleware(['auth:sanctum'])->group(function() {
     Route::namespace('Auth')->group(function () {
         Route::get('auth/profile', 'AuthenticationController@profile');
+        Route::post('auth/profile', 'AuthenticationController@updateProfile');
         Route::post('auth/logout', 'AuthenticationController@logout');
     });
 

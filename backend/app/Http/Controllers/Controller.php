@@ -47,7 +47,6 @@ class Controller extends BaseController
         }
         $result = app(AuthServiceProvider::$gateDefines[$policyAlias])
             ->{$method}($this->user, ...$arguments);
-
         if (!$result) {
             throw new AuthorizationException('This action is unauthorized.');
         }

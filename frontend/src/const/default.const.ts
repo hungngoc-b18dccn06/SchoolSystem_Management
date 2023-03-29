@@ -7,10 +7,14 @@ export const USER_ROLE = [
         label: '編集者',
         value: '2',
     },
-    // {
-    //   label: 'スタッフ',
-    //   value: 3,
-    // }
+    {
+        label: '教師',
+        value: '3',
+    },
+    {
+        label: '瞳',
+        value: '4',
+    },
 ];
 export const USER_STATUS = [
     {

@@ -124,5 +124,17 @@ export const useUserStore = defineStore({
             this.getListUser();
             return res;
         },
+        async getProfileDetail() {
+            try {
+                const response = await api.get<any>(ApiConstant.GET_PROFILE);
+                const profileInfo = response.data.data.user;
+                this.profile = {
+                    ...profileInfo,
+                    name: profileInfo.first_name + " " + profileInfo.last_name,
+                };
+            } catch (err) {
+                console.log(err);
+            }
+        },
     }
 })
