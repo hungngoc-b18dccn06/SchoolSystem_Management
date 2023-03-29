@@ -60,6 +60,7 @@ export const DELETE_CATEGORY = (id: number) => `/api/categories/${id}`;
 export const UPDATE_CATEGORY =  "/api/categories";
 
 export const GET_PROFILE =  "/api/auth/profile";
+export const UPDATE_PROFILE = "/api/auth/profile"
 export const GET_LIST_USER =  "/api/users";
 export const GET_DETAIL_USER = (id: number) => `/api/users/${id}`;
 export const CREATE_USER = "/api/users";

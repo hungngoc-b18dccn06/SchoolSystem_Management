@@ -37,5 +37,15 @@ class UserTableSeeder extends Seeder
             "role" => Role::USER,
             "status" => 1
         ]);
+
+        //TEACHER
+        User::create([
+            "email" => "teacher@base.vn",
+            "password" => Hash::make('password'),
+            "first_name" => "Teacher",
+            "last_name" => "Teacher",
+            "role" => Role::TEACHER,
+            "status" => 1
+        ]);
     }
 }

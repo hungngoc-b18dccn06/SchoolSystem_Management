@@ -67,6 +67,13 @@ class AuthenticationController extends Controller
         ]);
     }
 
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
+        $data = $request -> all();
+        return  $this->userService->update($user, $data);
+    }
+
     /**
      * @param Request $request
      * @return JsonResponse
