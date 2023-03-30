@@ -40,5 +40,8 @@ Route::middleware(['auth:sanctum'])->group(function() {
         Route::get('categories', 'CategoryController@index')->name('categories.index');
         Route::post('categories', 'CategoryController@updateOrCreate')->name('categories.updateOrCreate');
         Route::delete('categories/{id}', 'CategoryController@delete')->name('categories.delete');
+
+        //Teacher
+        Route::get('teachers', 'TeacherController@index')->name('teacher.index');
     });
 });
