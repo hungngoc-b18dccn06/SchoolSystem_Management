@@ -89,9 +89,6 @@ export const useUserStore = defineStore({
                   ...this.paramSearch
                 }
               });
-            //   const listUser = await axios.get('http://dev.base.api.skylab.vn/api/users', {headers: {
-            //     Authorization: 'Bearer 414|jT62FT7ik4NH0eduxBLTw0ZX3EF5D4V52g6Gytff'
-            // }});  
             this.users = listUser.data.data.data.map((item:any) => ({
                 ...item,
                 name: item.first_name + " " + item.last_name,
