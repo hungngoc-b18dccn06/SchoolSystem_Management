@@ -43,5 +43,7 @@ Route::middleware(['auth:sanctum'])->group(function() {
 
         //Teacher
         Route::get('teachers', 'TeacherController@index')->name('teacher.index');
+        Route::put('teachers/{id}', 'TeacherController@update')->name('teacher.update');
+        Route::post('teachers', 'TeacherController@create')->name('teacher.create');
     });
 });
