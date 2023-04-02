@@ -7,6 +7,7 @@ import UserCreate from '@/views/users/CreateUser.vue'
 import LoginView from "@/views/auth/LoginView.vue";
 import CategoryList from "@/components/category/List.vue"
 import Profile from '@/components/profile/Profile.vue';
+import TeacherList from '@/components/teacher/List.vue';
 import PAGE_ROUTE, { publicPath } from "@/const/pageRoute";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -45,6 +46,11 @@ const router = createRouter({
           path: '/profile',
           name: 'profile',
           component: Profile
+        },
+        {
+          path: '/teachers',
+          name: 'teachers',
+          component: TeacherList
         },
       ]
     },

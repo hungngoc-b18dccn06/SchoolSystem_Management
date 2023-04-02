@@ -54,7 +54,7 @@ class TeacherController extends Controller
         ]);
 
         return $this->respondOk([
-            'message' => __('messages.ok'),
+            'message' => "Teacher updated successfully",
             'data' => [
                 'teacher' => $teacher
             ]
@@ -65,8 +65,8 @@ class TeacherController extends Controller
     {
         // Validate the request data
         $request->validate([
-            'first_name'              => 'required|string|max:255',
-            'last_name'              => 'required|string|max:255',
+            'first_name'        => 'required|string|max:255',
+            'last_name'         => 'required|string|max:255',
             'email'             => 'required|string|email|max:255|unique:users',
             'password'          => 'required|string|min:8',
             'gender'            => 'required|string',
@@ -74,7 +74,7 @@ class TeacherController extends Controller
             'dateofbirth'       => 'required|date',
             'current_address'   => 'required|string|max:255',
             'permanent_address' => 'required|string|max:255',
-            'role'              => 'required|string|max:255',
+            'role'              => 'required|string|max:2',
         ]);
 
         $teacher = User::create([

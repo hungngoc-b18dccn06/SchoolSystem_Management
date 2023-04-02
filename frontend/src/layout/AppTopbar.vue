@@ -75,14 +75,14 @@ const items = ref([
   {
     items: [
       {
-        label: t("menu.logout"),
-        icon: "pi pi-sign-out",
-        command: openModal,
-      },
-      {
         label: t("menu.editProfile"),
         icon: "pi pi-user-edit",
         command: editProfile,
+      },
+      {
+        label: t("menu.logout"),
+        icon: "pi pi-sign-out",
+        command: openModal,
       },
     ],
   },

@@ -163,7 +163,7 @@ const handleSubmitForm = handleSubmit(async (data) => {
 
 async function loginSuccessCallback(accessToken: string) {
   localStorage.setItem(ACCESS_TOKEN, accessToken);
-  router.push(PAGE_ROUTE.HOME);
+  router.push(PAGE_ROUTE.USER_LIST);
 }
 </script>
 
