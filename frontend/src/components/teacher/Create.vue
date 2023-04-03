@@ -38,7 +38,8 @@
     const createTeacher = async () => {
          const data = {
             ...storeTeacher.getFormTeacher,
-            dateofbirth: format(new Date(storeTeacher.getFormTeacher.dateofbirth), CONST.DATE_FORMAT) 
+            dateofbirth: format(new Date(storeTeacher.getFormTeacher.dateofbirth), CONST.DATE_FORMAT) ,
+            role: '4',
         };
         try {
             const res = await storeTeacher.apiCreateTeacher(data);
