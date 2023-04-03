@@ -9,7 +9,6 @@ class Student extends Model
 {
     protected $fillable = [
         'user_id',
-        'parent_id',
         'class_id',
         'roll_number',
         'gender',
