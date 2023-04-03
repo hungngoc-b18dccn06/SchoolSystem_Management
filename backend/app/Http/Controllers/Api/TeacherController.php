@@ -110,4 +110,18 @@ class TeacherController extends Controller
             ]
         ], 200);
     }
+
+    public function delete(Teacher $teacher,$teacherID)
+    {
+        $teacher = $this->teacherService->getById($teacherID);
+        if (!$teacher) {
+            return $this->respondNotFound([
+                'message' => __('messages.not_found')
+            ]);
+        }
+        $teacher->delete();
+        return $this->respondOk([
+            'message' => __('messages.delete_success'),
+        ]);
+    }
 }
