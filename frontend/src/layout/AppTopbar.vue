@@ -45,7 +45,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref,onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import Popup from "@/components/PopupConfirm.vue";
 import api from "@/api";
@@ -102,6 +102,11 @@ const logout = async () => {
 const back = () => {
   router.back();
 };
+onMounted(
+  () => {
+      userStore.getProfileDetail();
+  }
+)
 </script>
 <style lang="scss" scoped>
 .layout-topbar {

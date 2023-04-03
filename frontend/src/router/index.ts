@@ -4,6 +4,8 @@ import LayoutView from '@/views/LayoutView.vue';
 import UserList from '@/components/user/List.vue'
 import UserUpdate from '@/views/users/UpdateUser.vue'
 import UserCreate from '@/views/users/CreateUser.vue'
+import TeacherCreate from '@/views/teachers/CreateTeacher.vue'
+import TeacherUpdate from '@/views/teachers/UpdateTeacher.vue'
 import LoginView from "@/views/auth/LoginView.vue";
 import CategoryList from "@/components/category/List.vue"
 import Profile from '@/components/profile/Profile.vue';
@@ -51,6 +53,16 @@ const router = createRouter({
           path: '/teachers',
           name: 'teachers',
           component: TeacherList
+        },
+        {
+          path: '/teacher/:id/update',
+          name: 'teacherUpdate',
+          component: TeacherUpdate
+        },
+        {
+          path: '/teacher/create',
+          name: 'teacherCreate',
+          component: TeacherCreate
         },
       ]
     },

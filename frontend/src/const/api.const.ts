@@ -70,4 +70,6 @@ export const DELETE_USER = (id: number) => `/api/users/${id}`;
 //TEACHERS
 
 export const GET_TEACHER =  "/api/teachers";
-
+export const CREATE_TEACHER = "/api/teachers";
+export const GET_DETAIL_TEACHER = (id: number) => `/api/teachers/${id}`;
+export const UPDATE_TEACHER = (id: number) => `/api/teachers/${id}`;

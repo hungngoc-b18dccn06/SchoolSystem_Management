@@ -13,6 +13,6 @@ export default {
   REGEX_PASSWORD: /^[a-zA-Z0-9!@#$%^&*()_]{8,16}$/,
   REGEX_EMAIL:  /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
   FORMAT_DATE: "yyyy/MM/dd",
-
+  DATE_FORMAT:"yyyy-MM-dd",
   DEFAULT_PAGE_SIZE: 10,
 }

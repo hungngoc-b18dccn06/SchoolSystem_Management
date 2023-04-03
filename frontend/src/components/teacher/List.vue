@@ -138,6 +138,7 @@
     );
     onMounted(
         () => {
+            storeUser.getProfileDetail();
             storeTeacher.getListTeacher();
             console.log(111)
 

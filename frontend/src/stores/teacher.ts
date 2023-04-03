@@ -25,6 +25,11 @@ interface FormTeacher {
     last_name: string;
     email: string;
     status: string;
+    permanent_address:string,
+    current_address:string,
+    gender:string,
+    dateofbirth:string,
+    phone:string,
     role: string;
     password?: string;
 }
@@ -32,12 +37,25 @@ interface UserStore {
     teachers: Teacher[],
     paramSearch: ParamsSearch,
     pagination: Pagination,
+    formTeacher: FormTeacher,
 }
 export const useTeacherStore = defineStore({
     id: "teacher",
     state: (): UserStore =>{
         return {
             teachers: [],
+            formTeacher: {
+                first_name: '',
+                last_name: '',
+                email: '',
+                permanent_address:'',
+                dateofbirth: '',
+                phone:'',
+                current_address:'',
+                gender:DEFAULT.GENDER[0].value,
+                status: DEFAULT.USER_STATUS[0].value,
+                role: DEFAULT.USER_ROLE[3].value,
+            },
             paramSearch: {},
             pagination: {
                 currentPage: 1,
@@ -50,6 +68,7 @@ export const useTeacherStore = defineStore({
         getPagination: (state => state.pagination),
         getParamSearch: (state => state.paramSearch),
         getTeachers: (state => state.teachers),
+        getFormTeacher: (state => state.formTeacher)
     },
     actions:{
         async getListTeacher(page?: number) {
@@ -71,6 +90,30 @@ export const useTeacherStore = defineStore({
                 total: listTeacher.data.data.total,
                 perPage: listTeacher.data.data.per_page,
             };
+        },
+        async apiCreateTeacher(data: FormTeacher){
+            const res = await api.post(ApiConstant.CREATE_TEACHER,data);
+            await this.getListTeacher();
+            return res
+        },
+        async getTeacherDetail(id: number) {
+            const response = await api.get<any>(ApiConstant.GET_DETAIL_TEACHER(id));
+            //this.formTeacher.email = response.data.teacher.user.email;
+            const data = {
+                ...response.data.data.teacher,
+                email: response.data.data.teacher.user.email,
+                first_name: response.data.data.teacher.user.first_name,
+                last_name: response.data.data.teacher.user.last_name,
+                status: response.data.data.teacher.user.status
+            };
+            this.formTeacher = data;
+            console.log(data)
+        },
+        async apiUpdateTeacher(data: FormTeacher , id: number) {
+            const res = await api.put(ApiConstant.UPDATE_TEACHER(id), data);
+            await this.getListTeacher();
+            console.log(res);
+            return res;
         },
     }
 })

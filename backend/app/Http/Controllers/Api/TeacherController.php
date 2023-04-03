@@ -25,6 +25,7 @@ class TeacherController extends Controller
 
     public function index(Request $request): JsonResponse
     {
+
         $teachers = Teacher::with('user')->latest()->paginate(10);
 
         return $this->respondOk([
@@ -63,6 +64,7 @@ class TeacherController extends Controller
 
     public function create(Request $request)
     {
+
         // Validate the request data
         $request->validate([
             'first_name'        => 'required|string|max:255',
@@ -94,6 +96,15 @@ class TeacherController extends Controller
         // Return a response indicating success
         return response()->json([
             'message' => 'Teacher created successfully',
+            'data' => [
+                'teacher' => $teacher
+            ]
+        ], 200);
+    }
+    public function detail($id) {
+        $teacher = Teacher::with('user')->findOrFail($id);
+        return response()->json([
+            'message' => 'successfully',
             'data' => [
                 'teacher' => $teacher
             ]
