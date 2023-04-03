@@ -25,6 +25,7 @@ class TeacherController extends Controller
 
     public function index(Request $request): JsonResponse
     {
+
         $teachers = Teacher::with('user')->latest()->paginate(10);
 
         return $this->respondOk([
@@ -54,7 +55,7 @@ class TeacherController extends Controller
         ]);
 
         return $this->respondOk([
-            'message' => __('messages.ok'),
+            'message' => "Teacher updated successfully",
             'data' => [
                 'teacher' => $teacher
             ]
@@ -63,10 +64,11 @@ class TeacherController extends Controller
 
     public function create(Request $request)
     {
+
         // Validate the request data
         $request->validate([
-            'first_name'              => 'required|string|max:255',
-            'last_name'              => 'required|string|max:255',
+            'first_name'        => 'required|string|max:255',
+            'last_name'         => 'required|string|max:255',
             'email'             => 'required|string|email|max:255|unique:users',
             'password'          => 'required|string|min:8',
             'gender'            => 'required|string',
@@ -74,7 +76,7 @@ class TeacherController extends Controller
             'dateofbirth'       => 'required|date',
             'current_address'   => 'required|string|max:255',
             'permanent_address' => 'required|string|max:255',
-            'role'              => 'required|string|max:255',
+            'role'              => 'required|string|max:2',
         ]);
 
         $teacher = User::create([
@@ -94,6 +96,15 @@ class TeacherController extends Controller
         // Return a response indicating success
         return response()->json([
             'message' => 'Teacher created successfully',
+            'data' => [
+                'teacher' => $teacher
+            ]
+        ], 200);
+    }
+    public function detail($id) {
+        $teacher = Teacher::with('user')->findOrFail($id);
+        return response()->json([
+            'message' => 'successfully',
             'data' => [
                 'teacher' => $teacher
             ]

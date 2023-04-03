@@ -143,5 +143,10 @@ const UserLang = {
   remind: "サインインしたままにする",
   userNotFound: "ユーザが見つかりませんでした。",
   userLoading: "ユーザーデータを読み込んでいます。 お待ちください。",
+  phone:'電話',
+  dateofbirth:"生年月日",
+  currentAddress:'現住所',
+  permanentAddress:'本籍地'
+
 };
 export default UserLang;
