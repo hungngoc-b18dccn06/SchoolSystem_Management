@@ -55,7 +55,7 @@
         modal.value?.open();
     };
     const handleBack = () => {
-        router.push({path: PAGE_ROUTE.USER_LIST})
+        router.push({path: PAGE_ROUTE.TEACHER_LIST})
     };
     const closeModal = () => {
         modal.value?.close();

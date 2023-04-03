@@ -39,7 +39,7 @@
          const data = {
             ...storeTeacher.getFormTeacher,
             dateofbirth: format(new Date(storeTeacher.getFormTeacher.dateofbirth), CONST.DATE_FORMAT) ,
-            role: '4',
+            role: '4'
         };
         try {
             const res = await storeTeacher.apiCreateTeacher(data);
@@ -57,7 +57,7 @@
         modal.value?.open();
     };
     const handleBack = () => {
-        router.push({path: PAGE_ROUTE.USER_LIST})
+        router.push({path: PAGE_ROUTE.TEACHER_LIST})
     };
     const closeModal = () => {
         modal.value?.close();
