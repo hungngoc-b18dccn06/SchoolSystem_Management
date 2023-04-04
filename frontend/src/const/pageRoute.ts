@@ -22,6 +22,10 @@ const enum PAGE_ROUTE {
 
   //teacher
   TEACHER_LIST = "/teachers",
+
+  //classes
+
+  GRADE_LIST = "/classes"
 }
 
 export const publicPath = [

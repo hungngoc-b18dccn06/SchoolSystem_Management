@@ -5,6 +5,7 @@ use App\Models\Grade;
 use App\Models\Subject;
 use App\Models\Teacher;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ListGradeResource;
 use Illuminate\Http\Request;
 
 class GradeController extends Controller
@@ -16,10 +17,16 @@ class GradeController extends Controller
      */
     public function index()
     {
-        $classes = Grade::withCount('students')->latest()->paginate(10);
+        $classes = Grade::withCount('students')->with('teacher.user')->latest()->paginate(10);
+        //dd($classes);
         return $this->respondOk([
             'message' => __('messages.ok'),
-            'data' => $classes,
+            'data' => [
+                "classes" => ListGradeResource::collection($classes),
+                'count' => $classes->total(),
+                'page' => $classes->currentPage(),
+                'linePerPage' => $classes->perPage(),
+            ]
         ]);
     }
 
