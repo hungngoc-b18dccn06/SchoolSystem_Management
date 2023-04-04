@@ -177,7 +177,6 @@ class StudentController extends Controller
             'roll_number'       => $request->roll_number
         ]);
 
-        dd($user = User::findOrFail($student->user_id));
         return $this->respondOk([
             'message' => "student updated successfully",
             'data' => [
