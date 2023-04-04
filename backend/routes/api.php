@@ -47,6 +47,7 @@ Route::middleware(['auth:sanctum'])->group(function() {
         Route::post('teachers', 'TeacherController@create')->name('teacher.create');
         Route::get('teachers/{id}', 'TeacherController@detail')->name('teacher.detail');
         Route::delete('teachers/{id}', 'TeacherController@delete')->name('teacher.delete');
+        Route::get('assign-subject-to-teacher/{id}', 'TeacherController@assignSubject')->name('teacher.assign.subject');
 
         //Student
         Route::get('students', 'StudentController@index')->name('student.index');
@@ -54,5 +55,17 @@ Route::middleware(['auth:sanctum'])->group(function() {
         Route::put('students/{id}', 'StudentController@update')->name('student.update');
         Route::get('students/{id}', 'StudentController@detail')->name('student.detail');
         Route::delete('students/{id}', 'StudentController@delete')->name('student.delete');
+
+        //Grade
+        Route::get('grades', 'GradeController@index')->name('grade.index');
+        Route::post('grades', 'GradeController@create')->name('grade.create');
+        Route::get('assign-subject-to-class/{id}', 'GradeController@assignSubject')->name('grade.assign.subject');
+        Route::post('assign-subject-to-class/{id}', 'GradeController@storeAssignedSubject')->name('store.class.assign.subject');
+
+        //Subject
+        Route::get('subjects', 'SubjectController@index')->name('subject.index');
+        Route::post('subjects', 'SubjectController@create')->name('subject.create');
+        Route::put('subjects/{id}', 'SubjectController@update')->name('subject.update');
+        Route::delete('subjects/{id}', 'SubjectController@delete')->name('subject.delete');
     });
 });

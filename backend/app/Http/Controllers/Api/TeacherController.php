@@ -124,4 +124,15 @@ class TeacherController extends Controller
             'message' => __('messages.delete_success'),
         ]);
     }
+
+    public function assignSubject($teacher_id)
+    {
+
+        $assigned = Teacher::with(['subjects'])->findOrFail($teacher_id);
+
+        return $this->respondOk([
+            'message' => __('messages.ok'),
+            'data' =>   $assigned
+        ]);
+    }
 }
