@@ -1,3 +1,4 @@
+
 <template>
     <div>
         <TitleCommon :title="'教師管理'" />
@@ -31,7 +32,7 @@
                             <Button
                                 class="white-space-nowrap"
                                 @click="gotToCreate"
-                                icon="pi pi-plus"
+                                icon="pi pi-plus đasdasd"
                                 :label="t('user.userRegister')"
                             ></Button>
                         </div>
