@@ -5,6 +5,7 @@
                 :value="storeUser.getUsers"
                 class="p-datatable-sm"
                 ref="dt"
+                tableStyle="min-width: 75rem"
                 @row-click="gotToDetail($event)"
                 :rowHover="true"
                 responsive-layout="scroll">
@@ -86,7 +87,7 @@
         {field: 'created_at', header: '登録日'},
         {field: 'status', header: '状態'},
     ];
-    function gotToDetail(event : object){
+    function gotToDetail(event : any){
         router.push(`/user/${event.data.id}/update`);
     }
     const gotToCreate = () =>{

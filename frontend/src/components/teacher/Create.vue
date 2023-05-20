@@ -63,6 +63,7 @@
         modal.value?.close();
     };
     onMounted(async () => {
+        console.log(storeTeacher.formTeacher)
         resetForm();
     });
 

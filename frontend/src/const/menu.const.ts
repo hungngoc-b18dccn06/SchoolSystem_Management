@@ -36,6 +36,16 @@ export default [
     {
         items: [
             {
+                label: "クラスを管理する",
+                icon: "pi pi-user-plus",
+                to: PAGE_ROUTE.GRADE_LIST,
+                public:false,
+            },
+        ],
+    },
+    {
+        items: [
+            {
                 label: "カテゴリー",
                 icon: "pi pi-bookmark",
                 to: PAGE_ROUTE.CATEGORY_LIST,

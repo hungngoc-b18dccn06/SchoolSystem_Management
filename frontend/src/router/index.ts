@@ -10,6 +10,7 @@ import LoginView from "@/views/auth/LoginView.vue";
 import CategoryList from "@/components/category/List.vue"
 import Profile from '@/components/profile/Profile.vue';
 import TeacherList from '@/components/teacher/List.vue';
+import ListClass from '@/views/classes/ListClass.vue';
 import PAGE_ROUTE, { publicPath } from "@/const/pageRoute";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -63,6 +64,11 @@ const router = createRouter({
           path: '/teacher/create',
           name: 'teacherCreate',
           component: TeacherCreate
+        },
+        {
+          path: '/classes',
+          name: 'classes',
+          component: ListClass
         },
       ]
     },
