@@ -56,6 +56,7 @@ const handleResetForm = () => {
         email: '',
         status: DEFAULT.USER_STATUS[0].value,
         role: DEFAULT.USER_ROLE[0].value,
+        gender: DEFAULT.GENDER[0].value,
         password:'',
       },
   });
@@ -248,7 +249,7 @@ defineExpose({
         </div>
         <div class="col-8">
           <Field
-            :class="{ 'is-invalid': errors.email }"
+            :class="{ 'is-invalid': errors.dateofbirth }"
             name="phone"
             v-slot="{ field, value }"
             
@@ -258,7 +259,7 @@ defineExpose({
                     <Calendar v-model="storeTeacher.getFormTeacher.dateofbirth" :placeholder="t('user.dateofbirth')"  />
                 </div>
             </div>
-            <ErrorMessage class="subtext p-error absolute pt-1" name="phone" />
+            <ErrorMessage class="subtext p-error absolute pt-1" name="dateofbirth" />
           </Field>
         </div>
       </div>
@@ -290,7 +291,7 @@ defineExpose({
                 </Field>
               </div>
             </div>
-            <ErrorMessage class="subtext p-error absolute pt-1" name="is_valid" />
+            <ErrorMessage class="subtext p-error absolute pt-1" name="gender" />
           </div>
         </div>
       </div>
@@ -322,7 +323,7 @@ defineExpose({
                 </Field>
               </div>
             </div>
-            <ErrorMessage class="subtext p-error absolute pt-1" name="type" />
+            <ErrorMessage class="subtext p-error absolute pt-1" name="status" />
           </div>
         </div>
       </div>

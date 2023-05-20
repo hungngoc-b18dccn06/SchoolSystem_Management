@@ -5,6 +5,7 @@
                 :value="storeTeacher.getTeachers"
                 class="p-datatable-sm"
                 ref="dt"
+                tableStyle="min-width: 75rem"
                 @row-click="gotToDetail($event)"
                 :rowHover="true"
                 responsive-layout="scroll">
@@ -83,15 +84,15 @@
     const columns = [
         {field: 'id', header: 'ID'},
         {field: 'name', header: '氏名' },
-        {field: 'email', header: 'メールアドレス'},
+        {field: 'email', header: 'メールアドレス' ,width: 100},
         {field: 'phone', header: '電話' },
         {field: 'gender', header: 'セックス'},
         {field: 'dateofbirth', header: '生年月日'},
-        {field: 'current_address', header: '最近の住所'},
+        {field: 'current_address', header: '最近の住所', width: '500px'},
         {field: 'permanent_address', header: '本籍地'}
     ];
-    function gotToDetail(event : object){
-        router.push(`/teacher/${event.data.id}/update`);
+    function gotToDetail(event : any){
+        router.push(`/teacher/${event?.data.id}/update`);
     }
     const gotToCreate = () =>{
         router.push(`/teacher/create`);
@@ -139,9 +140,7 @@
     onMounted(
         () => {
             storeUser.getProfileDetail();
-            storeTeacher.getListTeacher();
-            console.log(111)
-
+            storeTeacher?.getListTeacher();
         }
     )
 </script>

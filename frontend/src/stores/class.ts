@@ -27,7 +27,7 @@ interface UserStore {
     pagination: Pagination,
 }
 export const useClassStore = defineStore({
-    id: "teacher",
+    id: "class",
     state: (): UserStore =>{
         return {
             classes: [],
@@ -52,7 +52,6 @@ export const useClassStore = defineStore({
                   ...this.paramSearch
                 }
               });
-              console.log(listClass)
             this.classes = listClass.data.data.classes.map((item:any) => ({
                 ...item,
                 teacher: item.user.first_name + ' ' + item.user.last_name

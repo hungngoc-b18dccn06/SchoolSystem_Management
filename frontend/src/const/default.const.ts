@@ -29,14 +29,14 @@ export const USER_STATUS = [
 export const GENDER = [
     {
         label: '男',
-        value: 'male',
+        value: '1',
     },
     {
         label: '女性',
-        value: 'female',
+        value: '2',
     },
     {
         label: '他の',
-        value: 'other',
+        value: '3',
     },
 ];

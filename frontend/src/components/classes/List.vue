@@ -5,6 +5,7 @@
                 :value="storeClass.getClasses"
                 class="p-datatable-sm"
                 ref="dt"
+                tableStyle="min-width: 75rem"
                 @row-click="gotToDetail($event)"
                 :rowHover="true"
                 responsive-layout="scroll">
@@ -87,8 +88,8 @@
         {field: 'teacher', header: '教師' },
         {field: 'class_description', header: 'クラスの説明',style: { width: '400px !important' }},
     ];
-    function gotToDetail(event : object){
-        router.push(`/teacher/${event.data.id}/update`);
+    function gotToDetail(event : any){
+        // router.push(`/teacher/${event.data.id}/update`);
     }
     const gotToCreate = () =>{
         router.push(`/teacher/create`);
@@ -108,7 +109,7 @@
         modal.value?.open();
     };
      const changePage = async (event: any) => {
-        storeClass.getListTeacher(event.page + 1);
+        storeClass.getListClass(event.page + 1);
     };
     const confirm = async () =>{
         try {
@@ -136,9 +137,7 @@
     onMounted(
         () => {
             storeUser.getProfileDetail();
-            storeClass.getListClass();
-            console.log(storeClass.getClasses)
-
+            storeClass?.getListClass();
         }
     )
 </script>
