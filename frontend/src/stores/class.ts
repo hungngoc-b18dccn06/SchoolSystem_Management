@@ -20,10 +20,17 @@ export interface Pagination {
     total: number,
     perPage: number
 }
-
+interface FormClass {
+   class_name?: string;
+   class_numeric?:string;
+   class_description?:string;
+   teacher_name?:any;
+   teacher_id?: number;
+}
 interface UserStore {
     classes: Class[],
     paramSearch: ParamsSearch,
+    formClass: FormClass,
     pagination: Pagination,
 }
 export const useClassStore = defineStore({
@@ -32,6 +39,13 @@ export const useClassStore = defineStore({
         return {
             classes: [],
             paramSearch: {},
+            formClass: {
+                class_name: '',
+                class_description: '',
+                class_numeric: '',
+                teacher_name: '',
+                teacher_id: 0
+            },
             pagination: {
                 currentPage: 1,
                 total: 0,
@@ -43,6 +57,7 @@ export const useClassStore = defineStore({
         getPagination: (state => state.pagination),
         getParamSearch: (state => state.paramSearch),
         getClasses: (state => state.classes),
+        getFormClass: (state => state.formClass)
     },
     actions:{
         async getListClass(page?: number) {
@@ -61,6 +76,12 @@ export const useClassStore = defineStore({
                 total: listClass.data.data.count,
                 perPage: listClass.data.data.linePerPage,
             };
+        },
+
+        async apiCreateNewClass(data: FormClass){
+            const res = await api.post(ApiConstant.CREATE_NEW_CLASS,data);
+            await this.getListClass();
+            return res
         },
     }
 })

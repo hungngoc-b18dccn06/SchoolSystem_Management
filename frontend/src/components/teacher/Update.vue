@@ -40,7 +40,7 @@
     const updateTeacher = async () => {
          const data = {
             ...storeTeacher.getFormTeacher,
-            dateofbirth: format(new Date(storeTeacher.getFormTeacher.dateofbirth), CONST.DATE_FORMAT) 
+            dateofbirth: format(new Date(storeTeacher.getFormTeacher.dateofbirth), CONST.DATE_FORMAT),
         };
         try {
             const res = await storeTeacher.apiUpdateTeacher(data,idUser);

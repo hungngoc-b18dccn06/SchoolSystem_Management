@@ -76,3 +76,4 @@ export const UPDATE_TEACHER = (id: number) => `/api/teachers/${id}`;
 
 //CLASSES
 export const GET_CLASS =  "/api/grades";
+export const CREATE_NEW_CLASS = "/api/grades";

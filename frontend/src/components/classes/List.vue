@@ -93,7 +93,7 @@
         // router.push(`/teacher/${event.data.id}/update`);
     }
     const gotToCreate = () =>{
-        router.push(`/teacher/create`);
+         router.push(`/class/create`);
     }
     const filters = ref({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -138,7 +138,7 @@
     onMounted(
         () => {
             storeUser.getProfileDetail();
-            storeClass?.getListClass();
+            storeClass.getListClass();
         }
     )
 </script>

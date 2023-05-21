@@ -33,6 +33,7 @@ interface FormTeacher {
     role: string;
     password?: string;
 }
+
 interface UserStore {
     teachers: Teacher[],
     paramSearch: ParamsSearch,
@@ -104,8 +105,9 @@ export const useTeacherStore = defineStore({
                 email: response.data.data.teacher.user.email,
                 first_name: response.data.data.teacher.user.first_name,
                 last_name: response.data.data.teacher.user.last_name,
-                status: response.data.data.teacher.user.status
-            };
+                status: response.data.data.teacher.user.status,
+                gender: response.data.data.teacher.gender == "male" ? 1 : response.data.data.teacher.gender == "female" ? 2 : 3
+              };              
             this.formTeacher = data;
             console.log(data)
         },

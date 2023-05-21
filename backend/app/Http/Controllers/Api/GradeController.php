@@ -43,7 +43,7 @@ class GradeController extends Controller
             'class_name'        => 'required|string|max:255|unique:grades',
             'class_numeric'     => 'required|numeric',
             'teacher_id'        => 'required|numeric',
-            'class_description' => 'required|string|max:255'
+            'class_description' => 'required|string|max:1000'
         ]);
 
         $class = Grade::create([
