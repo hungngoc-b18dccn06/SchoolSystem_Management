@@ -33,6 +33,7 @@ interface FormTeacher {
     role: string;
     password?: string;
 }
+
 interface UserStore {
     teachers: Teacher[],
     paramSearch: ParamsSearch,
@@ -78,13 +79,17 @@ export const useTeacherStore = defineStore({
                   ...this.paramSearch
                 }
               });
-
-            this.teachers = listTeacher.data.data.data.map((item:any) => ({
+            
+            this.teachers = listTeacher.data.data.data
+              .filter((item: any) => item.user.role == 4)
+              .map((item: any) => ({
                 ...item,
                 name: item.user.first_name + " " + item.user.last_name,
-                email:item.user.email,
+                email: item.user.email,
                 created_at: format(new Date(item.created_at), CONST.FORMAT_DATE),
-            }));
+                role: item.user.role,
+              }));
+        
             this.pagination = {
                 currentPage: listTeacher.data.data.current_page,
                 total: listTeacher.data.data.total,
@@ -104,8 +109,9 @@ export const useTeacherStore = defineStore({
                 email: response.data.data.teacher.user.email,
                 first_name: response.data.data.teacher.user.first_name,
                 last_name: response.data.data.teacher.user.last_name,
-                status: response.data.data.teacher.user.status
-            };
+                status: response.data.data.teacher.user.status,
+                gender: response.data.data.teacher.gender == "male" ? 1 : response.data.data.teacher.gender == "female" ? 2 : 3
+              };              
             this.formTeacher = data;
             console.log(data)
         },
