@@ -153,15 +153,15 @@ defineExpose({
         </div>
         <div class="col-8">
           <Field
-            :class="{ 'is-invalid': errors.permanentAddress }"
-            name="permanent_address"
+            :class="{ 'is-invalid': storeClass.getFormClass.teacher_name }"
+            name="teacher_name"
             v-slot="{ field, value }"
-            v-model="storeTeacher.getFormTeacher.permanent_address"
+            v-model="storeClass.getFormClass.teacher_name"
           >
             <div class="p-inputgroup">
               <Dropdown v-model="storeClass.getFormClass.teacher_name" :options="storeTeacher.getTeachers" optionLabel="name"/>
             </div>
-            <ErrorMessage class="subtext p-error absolute pt-1" name="permanent_address" />
+            <ErrorMessage class="subtext p-error absolute pt-1" name="teacher_name" />
           </Field>
         </div>
       </div>

@@ -59,8 +59,11 @@ Route::middleware(['auth:sanctum'])->group(function() {
         //Grade
         Route::get('grades', 'GradeController@index')->name('grade.index');
         Route::post('grades', 'GradeController@create')->name('grade.create');
+
         Route::get('assign-subject-to-class/{id}', 'GradeController@assignSubject')->name('grade.assign.subject');
         Route::post('assign-subject-to-class/{id}', 'GradeController@storeAssignedSubject')->name('store.class.assign.subject');
+        Route::put('grades/{id}', 'GradeController@update')->name('grade.update');
+        Route::get('grades/{id}', 'GradeController@detail')->name('grade.detail');
 
         //Subject
         Route::get('subjects', 'SubjectController@index')->name('subject.index');

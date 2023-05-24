@@ -90,7 +90,7 @@
         {field: 'class_description', header: 'クラスの説明',style: { width: '400px !important' }},
     ];
     function gotToDetail(event : any){
-        // router.push(`/teacher/${event.data.id}/update`);
+        router.push(`/class/${event.data.id}/update`);
     }
     const gotToCreate = () =>{
          router.push(`/class/create`);

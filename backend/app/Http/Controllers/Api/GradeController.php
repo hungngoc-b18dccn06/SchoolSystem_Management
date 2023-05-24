@@ -141,6 +141,16 @@ class GradeController extends Controller
         ]);
     }
 
+    public function detail($id) {
+        $class = Grade::with(['teacher','user'])->findOrFail($id);
+        return response()->json([
+            'message' => 'successfully',
+            'data' => [
+                'class' => $class
+            ]
+        ], 200);
+    }
+
 
     public function assignSubject($classid)
     {

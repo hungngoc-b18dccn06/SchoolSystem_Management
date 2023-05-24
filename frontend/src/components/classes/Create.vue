@@ -45,7 +45,7 @@ import { da } from "date-fns/locale";
             const res = await storeClass.apiCreateNewClass(data);
             toast.add({group: "message", severity: "success", summary: res.data.message, life: CONST.TIME_DELAY, closable: false});
             closeModal();
-            router.push({path: PAGE_ROUTE.TEACHER_LIST});
+            router.push({path: PAGE_ROUTE.GRADE_LIST});
         } catch (e:any) {
             closeModal();
         }
@@ -57,7 +57,7 @@ import { da } from "date-fns/locale";
         modal.value?.open();
     };
     const handleBack = () => {
-        router.push({path: PAGE_ROUTE.TEACHER_LIST})
+        router.push({path: PAGE_ROUTE.GRADE_LIST})
     };
     const closeModal = () => {
         modal.value?.close();
