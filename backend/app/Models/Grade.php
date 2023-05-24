@@ -28,4 +28,9 @@ class Grade extends Model
     {
         return $this->belongsTo(Teacher::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -83,5 +83,21 @@ export const useClassStore = defineStore({
             await this.getListClass();
             return res
         },
+
+        async apiUpdateClass(data: FormClass , id: number) {
+            const res = await api.put(ApiConstant.UPDAT_CLASS(id), data);
+            await this.getListClass();
+            return res;
+        },
+
+        async getClassDetail(id: number) {
+            const response = await api.get<any>(ApiConstant.GET_DETAIL_CLASS(id));
+            const list_teacher = await api.get<any>(ApiConstant.GET_TEACHER);
+            const data = response.data.data.class
+            const filteredArray = list_teacher.data.data.data.filter((ele:any) => ele.user.id === data.teacher.user_id);
+            this.formClass.teacher_name = filteredArray[0].user.first_name + ' ' + filteredArray[0].user.last_name;
+            this.formClass.teacher_id = filteredArray[0].user.id;
+            this.formClass = data;
+        },
     }
 })

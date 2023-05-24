@@ -11,6 +11,8 @@ import CategoryList from "@/components/category/List.vue"
 import Profile from '@/components/profile/Profile.vue';
 import TeacherList from '@/components/teacher/List.vue';
 import ListClass from '@/views/classes/ListClass.vue';
+import ClassCreate from '@/views/classes/CreateClass.vue';
+import ClassUpdate from '@/views/classes/UpdateClass.vue';
 import PAGE_ROUTE, { publicPath } from "@/const/pageRoute";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -69,6 +71,16 @@ const router = createRouter({
           path: '/classes',
           name: 'classes',
           component: ListClass
+        },
+        {
+          path: '/class/:id/update',
+          name: 'classUpdate',
+          component: ClassUpdate
+        },
+        {
+          path: '/class/create',
+          name: 'classCreate',
+          component: ClassCreate
         },
       ]
     },

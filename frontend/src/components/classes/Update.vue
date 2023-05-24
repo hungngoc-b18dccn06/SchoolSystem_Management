@@ -8,7 +8,7 @@
               :labelOk="t('common.yes')"
               :header="t('common.confirm')"
               :content="t('common.popupConfirmSaveContent')"
-              :ok="updateTeacher"
+              :ok="UpdateClass"
               :cancel="closeModal"
           ></Popup>
       </div>
@@ -16,8 +16,7 @@
   
   <script setup lang="ts">
       import TitleCommon from "@/components/common/TitleCommon.vue";
-      import FormInfo from '@/components/teacher/FormInfo.vue'
-      import {useUserStore} from "@/stores/user";
+      import FormInfo from '@/components/classes/FormInfo.vue'
       import CONST, {DEFAULT} from "@/const";
       import PAGE_ROUTE from "@/const/pageRoute";
       import {useToast} from "primevue/usetoast";
@@ -25,28 +24,28 @@
       import Popup from "@/components/PopupConfirm.vue";
       import {useRoute, useRouter} from 'vue-router';
       import { useI18n } from "vue-i18n";
-      import {useTeacherStore} from "@/stores/teacher";
+      import {useClassStore} from "@/stores/class";
       import {format} from "date-fns";
+  import { da } from "date-fns/locale";
       const { t } = useI18n();
-      const storeUser = useUserStore();
-      const storeTeacher = useTeacherStore();
+      const storeTeacher = useClassStore();
+      const storeClass = useClassStore();
       const toast = useToast();
       const router = useRouter();
       const modal = ref<InstanceType<typeof Popup> | null>(null);
       const formInfo = ref<InstanceType<typeof FormInfo> | null>(null);
       const currentRoute = useRoute();
       const idUser = Number(currentRoute.params.id);
-  
-      const updateTeacher = async () => {
+      const UpdateClass = async () => {
            const data = {
-              ...storeTeacher.getFormTeacher,
-              dateofbirth: format(new Date(storeTeacher.getFormTeacher.dateofbirth), CONST.DATE_FORMAT),
+             ...storeClass.getFormClass,
+             teacher_id: storeClass.getFormClass.teacher_name?.id,
           };
           try {
-              const res = await storeTeacher.apiUpdateTeacher(data,idUser);
+              const res = await storeClass.apiUpdateClass(data, idUser);
               toast.add({group: "message", severity: "success", summary: res.data.message, life: CONST.TIME_DELAY, closable: false});
               closeModal();
-              router.push({path: PAGE_ROUTE.TEACHER_LIST});
+              router.push({path: PAGE_ROUTE.GRADE_LIST});
           } catch (e:any) {
               closeModal();
           }
@@ -55,13 +54,14 @@
           modal.value?.open();
       };
       const handleBack = () => {
-          router.push({path: PAGE_ROUTE.TEACHER_LIST})
+          router.push({path: PAGE_ROUTE.GRADE_LIST})
       };
       const closeModal = () => {
           modal.value?.close();
       };
       onMounted(async () => {
-          storeTeacher.getTeacherDetail(idUser);
+        console.log(storeClass.getFormClass)
+        storeTeacher.getClassDetail(idUser);
       });
   
   </script>
