@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import logo from '@/assets/logo.png'
+import logo from '@/assets/logo-student.jpeg'
 import {ref, onMounted} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import AppTopBar from "@/layout/AppTopbar.vue";
@@ -36,7 +36,7 @@ const toggleSidebar = () => {
   openSidebar.value = !openSidebar.value;
 }
 const clickToHome = () => {
-  router.push(`/users`);
+  router.push(`/student`);
 };
 onMounted(async () => {
 });

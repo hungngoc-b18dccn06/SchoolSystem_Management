@@ -1,0 +1,180 @@
+@import './base.css';
+body {
+  background-color: rgb(245, 245, 245);
+}
+#app {
+  height: 100vh;
+  font-family: Quicksand, sans-serif;
+}
+
+.p-component {
+  font-family: Quicksand, sans-serif !important;
+}
+
+img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* ----- Topbar */
+
+.topbar-user-menu {
+  left: auto !important;
+  right: 0;
+  top: 105% !important;
+  width: auto !important;
+  padding: .25rem;
+}
+.topbar-user-menu.p-menu .p-submenu-header {
+  padding: 0;
+}
+
+.topbar-user-menu.p-menu .p-menuitem-text {
+  white-space: nowrap;
+}
+
+/* ----- Sidebar */
+
+.layout-wrapper .layout-menu li a,
+.layout-wrapper .layout-menu li a.router-link-exact-active {
+  font-size: var(--sidebar-fs);
+}
+
+/* ----- Datatable */
+
+.p-datatable.p-datatable-sm .p-datatable-header,
+.p-datatable .p-datatable-header {
+  background: transparent !important;
+  border: 0;
+  padding: 0 0 1rem 0;
+}
+span.p-column-title {
+  font-weight: bold !important;
+}
+.p-datatable-wrapper {
+  border-radius: 0.5rem;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.02), 0px 0px 2px rgba(0, 0, 0, 0.05), 0px 1px 4px rgba(0, 0, 0, 0.08);
+}
+.p-datatable.p-datatable-sm .p-datatable-thead > tr > th {
+  padding: .8rem .5rem;
+}
+.p-datatable .p-datatable-tbody > tr {
+  font-size: var(--table-fs-td);
+  height: 52px;
+  cursor: pointer;
+}
+.p-datatable .p-datatable-tbody>tr:focus {
+  outline: 0;
+}
+.p-datatable .p-datatable-tbody > tr:last-of-type {
+  border-bottom: 0;
+}
+.p-datatable .p-datatable-tbody > tr:nth-child(odd) {
+  background-color: #f0f3f6;
+}
+.p-datatable .p-datatable-tbody > tr:nth-child(even) {
+  background-color: white;
+}
+.p-datatable .p-datatable-tbody > tr .p-button{
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+  font-size: .9em;
+}
+.p-datatable .p-datatable-tbody > tr .p-button-icon{
+  font-size: .9em;
+}
+.p-datatable .p-sortable-column:focus { 
+  box-shadow: none;
+}
+.p-datatable th:hover,
+.p-datatable tr:hover {
+  background: var(--table-bg-hover) !important;
+}
+.p-datatable .p-sortable-column.p-highlight {
+  background: var(--table-bg-active) !important;
+  color: var(--color-main);
+}
+.p-datatable .p-sortable-column.p-highlight:hover,
+.p-datatable .p-sortable-column.p-highlight:hover .p-sortable-column-icon,
+.p-datatable .p-sortable-column.p-highlight .p-sortable-column-icon {
+  color: var(--color-main);
+}
+
+
+.p-paginator {
+  background: transparent;
+  font-size: var(--table-fs-td);
+  margin-top: .5rem;
+}
+
+.p-paginator .p-paginator-current {
+  margin-left: auto;
+}
+.p-paginator .p-paginator-pages .p-paginator-page {
+  min-width: var(--button-md-height);
+  height: var(--button-md-height);
+}
+.p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+  background: var(--button-bg);
+  color: var(--button-color-main);
+}
+/* ----- Form */
+.title-field {
+  font-weight: bold;
+  margin-left: 20px;
+  font-size: 1rem;
+}
+
+/* ----- Button */
+.p-input-icon-left>i, .p-input-icon-right>i {
+  z-index: 3;
+}
+.p-button {
+  color: var(--button-color-main);
+  background: var(--button-bg);
+  border-color: transparent;
+}
+.p-button:focus {
+  box-shadow: none !important;
+}
+.p-button.p-button-text {
+  color: var(--color-text)
+}
+
+.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+  background: var(--button-bg);
+}
+
+.p-button:enabled:hover,
+.p-inputswitch.p-inputswitch-checked:not(.p-disabled):hover .p-inputswitch-slider {
+  background: var(--button-bg-hover);
+  border-color: transparent;
+}
+.p-button.p-button { 
+  height: var(--button-md-height);
+}
+.p-button.p-button-sm { 
+  height: var(--button-sm-height);
+}
+
+/* ----- Toast */
+.p-toast .p-toast-message .p-toast-message-content {
+  align-items: center;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  font-size: 0.875rem;
+  min-height: 40px;
+  font-weight:100;
+}
+
+.p-toast .p-toast-message .p-toast-message-content .p-toast-message-icon {
+  font-size: 0.875rem;
+;
+}
+.p-button.p-button{
+  --button-bg-hover: #2B9DCA
+}
