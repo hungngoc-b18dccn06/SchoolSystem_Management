@@ -36,7 +36,7 @@ const toggleSidebar = () => {
   openSidebar.value = !openSidebar.value;
 }
 const clickToHome = () => {
-  router.push(`/`);
+  router.push(`/users`);
 };
 onMounted(async () => {
 });
