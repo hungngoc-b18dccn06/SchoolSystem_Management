@@ -25,10 +25,11 @@
     import {useRoute, useRouter} from 'vue-router';
     import { useI18n } from "vue-i18n";
     import {useClassStore} from "@/stores/class";
+    import {useTeacherStore} from "@/stores/teacher";
     import {format} from "date-fns";
 import { da } from "date-fns/locale";
     const { t } = useI18n();
-    const storeTeacher = useClassStore();
+    const storeTeacher = useTeacherStore();
     const storeClass = useClassStore();
     const toast = useToast();
     const router = useRouter();
@@ -36,18 +37,20 @@ import { da } from "date-fns/locale";
     const formInfo = ref<InstanceType<typeof FormInfo> | null>(null);
 
     const createNewClass = async () => {
-         const data = {
-           ...storeClass.getFormClass,
-           teacher_id: storeClass.getFormClass.teacher_name?.id,
-        };
-        console.log(data);
-        try {
+        const teacher = storeTeacher.getTeachers.find((teacher :any) => teacher.name === storeClass.getFormClass.teacher_name);
+            if (teacher) {
+             const data = {
+                ...storeClass.getFormClass,
+                teacher_id: teacher.id,
+             }
+             try {
             const res = await storeClass.apiCreateNewClass(data);
             toast.add({group: "message", severity: "success", summary: res.data.message, life: CONST.TIME_DELAY, closable: false});
             closeModal();
             router.push({path: PAGE_ROUTE.GRADE_LIST});
         } catch (e:any) {
             closeModal();
+        }
         }
     };
     const resetForm = ()  => {
