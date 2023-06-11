@@ -86,6 +86,7 @@ export const useClassStore = defineStore({
 
         async apiUpdateClass(data: FormClass , id: number) {
             const res = await api.put(ApiConstant.UPDAT_CLASS(id), data);
+            console.log(res);
             await this.getListClass();
             return res;
         },
@@ -95,9 +96,13 @@ export const useClassStore = defineStore({
             const list_teacher = await api.get<any>(ApiConstant.GET_TEACHER);
             const data = response.data.data.class
             const filteredArray = list_teacher.data.data.data.filter((ele:any) => ele.user.id === data.teacher.user_id);
-            this.formClass.teacher_name = filteredArray[0].user.first_name + ' ' + filteredArray[0].user.last_name;
+           
             this.formClass.teacher_id = filteredArray[0].user.id;
-            this.formClass = data;
+            this.formClass = {
+                ...data,
+                teacher_name: filteredArray[0].user.first_name + filteredArray[0].user.last_name
+            };
+            console.log( this.formClass);
         },
     }
 })
