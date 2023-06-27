@@ -144,10 +144,11 @@ const handleSubmitForm = handleSubmit(async (data) => {
     console.log(11)
   submitted.value = true;
   const user = {
-    ...data
-    // role: "user",
+    ...data,
+    //role: "user",
   };
   state.loading = true;
+  console.log(user)
   try {
     const reponse: AxiosResponse<ResponseLogin> = await api.post(
       ApiConstant.LOGIN,
@@ -163,7 +164,7 @@ const handleSubmitForm = handleSubmit(async (data) => {
 
 async function loginSuccessCallback(accessToken: string) {
   localStorage.setItem(ACCESS_TOKEN, accessToken);
-  router.push(PAGE_ROUTE.USER_LIST);
+  router.push(PAGE_ROUTE.STUDENT_PAGE);
 }
 </script>
 

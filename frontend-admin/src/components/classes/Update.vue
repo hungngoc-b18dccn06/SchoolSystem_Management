@@ -25,30 +25,36 @@
       import {useRoute, useRouter} from 'vue-router';
       import { useI18n } from "vue-i18n";
       import {useClassStore} from "@/stores/class";
+      import { useTeacherStore } from "@/stores/teacher";
+      const storeTeacher = useTeacherStore();
       import {format} from "date-fns";
-  import { da } from "date-fns/locale";
       const { t } = useI18n();
-      const storeTeacher = useClassStore();
       const storeClass = useClassStore();
       const toast = useToast();
       const router = useRouter();
       const modal = ref<InstanceType<typeof Popup> | null>(null);
       const formInfo = ref<InstanceType<typeof FormInfo> | null>(null);
       const currentRoute = useRoute();
-      const idUser = Number(currentRoute.params.id);
+      const idClass = Number(currentRoute.params.id);
+      
       const UpdateClass = async () => {
-           const data = {
-             ...storeClass.getFormClass,
-             teacher_id: storeClass.getFormClass.teacher_name?.id,
-          };
-          try {
-              const res = await storeClass.apiUpdateClass(data, idUser);
-              toast.add({group: "message", severity: "success", summary: res.data.message, life: CONST.TIME_DELAY, closable: false});
-              closeModal();
-              router.push({path: PAGE_ROUTE.GRADE_LIST});
-          } catch (e:any) {
-              closeModal();
-          }
+          const teacher = storeTeacher.getTeachers.find((teacher :any) => teacher.name === storeClass.getFormClass.teacher_name);
+            if (teacher) {
+             const data = {
+                ...storeClass.getFormClass,
+                teacher_id: teacher.id,
+             }
+             try {
+            const res = await storeClass.apiUpdateClass(data,idClass);
+                 toast.add({group: "message", severity: "success", summary: res.data.message, life: CONST.TIME_DELAY, closable: false});
+                 closeModal();
+                 router.push({path: PAGE_ROUTE.TEACHER_LIST});
+            } catch (e:any) {
+                 closeModal();
+            }
+             
+            }
+         
       };
       const handleSubmit = () => {
           modal.value?.open();
@@ -60,8 +66,7 @@
           modal.value?.close();
       };
       onMounted(async () => {
-        console.log(storeClass.getFormClass)
-        storeTeacher.getClassDetail(idUser);
+        storeClass.getClassDetail(idClass);
       });
   
   </script>

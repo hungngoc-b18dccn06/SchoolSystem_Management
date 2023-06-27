@@ -14,7 +14,6 @@ const storeClass = useClassStore();
 const { t } = useI18n();
 const currentRoute = useRoute();
 const emit = defineEmits(["submit", "cancel"]);
-const selectedTeacher = ref();
 const isCreate = currentRoute.path.search("create") >= 0;
 const schema = yup.object({
   class_numeric: yup
@@ -33,9 +32,6 @@ const schema = yup.object({
     .max(100, t('message.maxLength100')),
 });
 
-function getNameTeacher() {
-    console.log(storeTeacher.getTeachers);
-}
 
 const {resetForm, values, errors, validate } = useForm({
   validationSchema: schema,
@@ -57,7 +53,7 @@ const handleResetForm = () => {
 
 onMounted(async () => {
   storeTeacher.getListTeacher();
-  getNameTeacher();
+  console.log(storeTeacher.getNameTeacher)
 });
 
 const handleSubmit = async () => {
@@ -159,7 +155,7 @@ defineExpose({
             v-model="storeClass.getFormClass.teacher_name"
           >
             <div class="p-inputgroup">
-              <Dropdown v-model="storeClass.getFormClass.teacher_name" :options="storeTeacher.getTeachers" optionLabel="name"/>
+              <Dropdown v-model="storeClass.getFormClass.teacher_name" :options="storeTeacher.getNameTeacher"/>
             </div>
             <ErrorMessage class="subtext p-error absolute pt-1" name="teacher_name" />
           </Field>

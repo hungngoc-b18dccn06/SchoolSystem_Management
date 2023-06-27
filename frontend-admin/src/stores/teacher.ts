@@ -15,6 +15,10 @@ export interface  Teacher {
 export interface ParamsSearch {
     search_text?: string;
 }
+
+export interface ListNameTeacher{
+    name: string;
+}
 export interface Pagination {
     currentPage: number,
     total: number,
@@ -39,6 +43,7 @@ interface UserStore {
     paramSearch: ParamsSearch,
     pagination: Pagination,
     formTeacher: FormTeacher,
+    nameTeacher: ListNameTeacher[],
 }
 export const useTeacherStore = defineStore({
     id: "teacher",
@@ -62,14 +67,16 @@ export const useTeacherStore = defineStore({
                 currentPage: 1,
                 total: 0,
                 perPage: 0,
-            },   
+            },  
+            nameTeacher: [], 
         }
     },
     getters:{
         getPagination: (state => state.pagination),
         getParamSearch: (state => state.paramSearch),
         getTeachers: (state => state.teachers),
-        getFormTeacher: (state => state.formTeacher)
+        getFormTeacher: (state => state.formTeacher),
+        getNameTeacher: (state => state.nameTeacher)
     },
     actions:{
         async getListTeacher(page?: number) {
@@ -84,12 +91,12 @@ export const useTeacherStore = defineStore({
               .filter((item: any) => item.user.role == 4)
               .map((item: any) => ({
                 ...item,
-                name: item.user.first_name + " " + item.user.last_name,
+                name: item.user.first_name +item.user.last_name,
                 email: item.user.email,
                 created_at: format(new Date(item.created_at), CONST.FORMAT_DATE),
                 role: item.user.role,
               }));
-        
+             this.nameTeacher =  listTeacher.data.data.data.map((item :any) => item.user.first_name + item.user.last_name);;
             this.pagination = {
                 currentPage: listTeacher.data.data.current_page,
                 total: listTeacher.data.data.total,
@@ -110,15 +117,13 @@ export const useTeacherStore = defineStore({
                 first_name: response.data.data.teacher.user.first_name,
                 last_name: response.data.data.teacher.user.last_name,
                 status: response.data.data.teacher.user.status,
-                gender: response.data.data.teacher.gender == "male" ? 1 : response.data.data.teacher.gender == "female" ? 2 : 3
+                gender: response.data.data.teacher.gender == "male" ? "1" : response.data.data.teacher.gender == "female" ? "2" : "3"
               };              
             this.formTeacher = data;
-            console.log(data)
         },
         async apiUpdateTeacher(data: FormTeacher , id: number) {
             const res = await api.put(ApiConstant.UPDATE_TEACHER(id), data);
             await this.getListTeacher();
-            console.log(res);
             return res;
         },
     }
