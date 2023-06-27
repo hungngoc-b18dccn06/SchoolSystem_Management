@@ -43,5 +43,8 @@ const MessageLang =  {
     phoneNumberRequired: "電話番号の形式が正しくありません。",
     passwordNotMatch: "パスワードの確認が一致しません。",
     categoryDuplicate: "カテゴリーが重複しています。",
+
+    validateStartNumber:"終了値は開始値以上の値に設定してください。",
+    validateEndNumber:"終了値は開始値以上の値に設定してください。",
 }
 export default MessageLang;

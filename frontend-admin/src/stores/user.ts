@@ -20,6 +20,26 @@ export interface Pagination {
     total: number,
     perPage: number
 }
+export interface ParamsSearch {
+    search_text?: string;
+    status?: string;
+    start_date?: any;
+    end_date?: any;
+    recruit_ids?: string;
+    order_by?: string;
+    start_number?:any;
+    end_number?:any;
+    numberic_type?:string;
+    date_type?:string;
+    flag_type?:any;
+    flag_value?:any;
+    type?: string;
+    contract_period_start?:any;
+    contract_period_end?:any;
+    base_salary_start?:any;
+    base_salary_end?:any;
+    page?:number;
+}
 interface FormUser {
     first_name: string;
     last_name: string;
@@ -34,6 +54,7 @@ interface UserStore {
     paramSearch: ParamsSearch,
     pagination: Pagination,
     formUser: FormUser
+    
 }
 export const useUserStore = defineStore({
     id: "user",
