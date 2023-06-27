@@ -328,17 +328,16 @@ watch(
   }
 );
 watch(
-    () => storeUser.getParamSearch.end_number,
-    (value) => {
-        setTimeout(function () {
-            if (
-                value === storeUser.getParamSearch.end_number
-            ) {
-                storeUser.getListUser();
-            }
-        }, 1000);
-    }
+  () => storeUser.getParamSearch.search_text,
+  (value) => {
+    setTimeout(function () {
+      if (value === storeUser.getParamSearch.search_text) {
+        storeUser.getListUser();
+      }
+    }, 1000);
+  }
 );
+
 const handleChangeToStart = async () => {
     storeUser.getParamSearch.start_date = format(
       new Date(startMonth.value),
@@ -389,8 +388,6 @@ const clearInput = (inputName: any) => {
     storeUser.getParamSearch.date_type = undefined;
     storeUser.getParamSearch.start_date = undefined;
     storeUser.getParamSearch.end_date = undefined;
-    storeUser.getParamSearch.contract_period_end = undefined;
-    storeUser.getParamSearch.contract_period_start = undefined;
     startMonth.value = "";
     endMonth.value = "";
     storeUser.getListUser();
