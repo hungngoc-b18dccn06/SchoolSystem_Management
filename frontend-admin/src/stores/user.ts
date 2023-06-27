@@ -34,10 +34,6 @@ export interface ParamsSearch {
     flag_type?:any;
     flag_value?:any;
     type?: string;
-    contract_period_start?:any;
-    contract_period_end?:any;
-    base_salary_start?:any;
-    base_salary_end?:any;
     page?:number;
 }
 interface FormUser {
