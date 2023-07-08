@@ -88,7 +88,7 @@ export const useTeacherStore = defineStore({
               });
             
             this.teachers = listTeacher.data.data.data
-              .filter((item: any) => item.user.role == 4)
+              .filter((item: any) => item.user.role == 3)
               .map((item: any) => ({
                 ...item,
                 name: item.user.first_name +item.user.last_name,
@@ -96,6 +96,7 @@ export const useTeacherStore = defineStore({
                 created_at: format(new Date(item.created_at), CONST.FORMAT_DATE),
                 role: item.user.role,
               }));
+              
              this.nameTeacher =  listTeacher.data.data.data.map((item :any) => item.user.first_name + item.user.last_name);;
             this.pagination = {
                 currentPage: listTeacher.data.data.current_page,
